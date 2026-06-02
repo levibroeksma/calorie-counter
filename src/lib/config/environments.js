@@ -17,3 +17,8 @@ export function getEnvironmentConfig() {
     baseUrl: import.meta.env.BASE_URL,
   };
 }
+
+/** Demo JSON from `src/data/seed/` is loaded only during local dev. */
+export function shouldUseSeedData() {
+  return import.meta.env.DEV;
+}
