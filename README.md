@@ -80,15 +80,16 @@ Protected routes use a client guard in [`AppLayout.astro`](src/layouts/AppLayout
 
 ## Seed data
 
-On first load (empty store), data is seeded from:
+On first load in **development** (empty store), demo data is seeded from:
 
 ```text
-public/
+src/data/seed/
   items.json         # 8 example foods
   consumption.json   # starts as []
   preferences.json   # default daily targets
-  favicon.svg
 ```
+
+Production uses Netlify Blobs with empty catalog/consumption and zeroed preference targets (no seed files deployed).
 
 ## Project structure
 
@@ -133,7 +134,8 @@ Browser (Alpine)
                                     /          \
                             memory (dev)    Netlify Blobs (prod)
                                     \          /
-                                     seed from public/*.json when empty
+                          dev: seed from src/data/seed/
+                          prod: empty defaults when blob missing
 ```
 
 - **Alpine stores:** `appStore` (data, UI, toasts), `modalStore` (modals/forms), `config` / `app` (metadata)
