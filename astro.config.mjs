@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig, envField } from 'astro/config';
 
 import netlify from '@astrojs/netlify';
 
@@ -29,5 +29,17 @@ export default defineConfig({
   },
   devToolbar: {
     enabled: false,
+  },
+  env: {
+    schema: {
+      APP_PASSWORD: envField.string({
+        context: 'server',
+        access: 'secret',
+      }),
+      WRITE_TOKEN: envField.string({
+        context: 'server',
+        access: 'secret',
+      }),
+    },
   },
 });

@@ -3,3 +3,5 @@
 
 [build.environment]
   NODE_VERSION = "22"
+  # APP_PASSWORD and WRITE_TOKEN: set in Netlify UI (Site configuration → Environment variables).
+  # Do not commit secrets here. See .env.example.
