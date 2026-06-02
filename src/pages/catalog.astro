@@ -14,7 +14,13 @@ const searchPlaceholder = `'${nl.forms.searchItem}'`;
   <main class="p-4" x-data="catalogPage()">
     <div class="mb-4 flex items-center justify-between gap-3">
       <h1 class="text-lg font-semibold text-slate-100">{nl.pages.catalog}</h1>
-      <Button text={addItemLabel} click="openAdd()" variant="ghost" />
+      <button
+        type="button"
+        class="shrink-0 rounded-app px-2 py-1 text-sm text-slate-400 hover:text-slate-100"
+        @click="openAdd()"
+      >
+        {nl.buttons.addCatalogItem}
+      </button>
     </div>
     <label class="block">
       <span class="mb-1 block text-sm text-slate-300"
