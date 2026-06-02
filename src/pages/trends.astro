@@ -1,0 +1,14 @@
+---
+import PeriodToggle from "@components/trends/PeriodToggle.astro";
+import TrendChart from "@components/trends/TrendChart.astro";
+import AppLayout from "@layouts/AppLayout.astro";
+import nl from "@lib/copy/nl.js";
+---
+
+<AppLayout title={nl.pages.trends}>
+  <main class="p-4" x-data="trendsPage()">
+    <h1 class="text-lg font-semibold text-slate-100">{nl.pages.trends}</h1>
+    <PeriodToggle />
+    <TrendChart />
+  </main>
+</AppLayout>

@@ -1,0 +1,12 @@
+---
+import ExpressionListRow from "./ExpressionListRow.astro";
+---
+
+<div
+  class="mt-4 rounded-app border border-dashed border-slate-700 p-3"
+  x-data="{ demoItems: [{ name: 'Demo eiwit' }, { name: 'Demo kcal' }] }"
+>
+  <template x-for="(item, index) in demoItems" :key="index">
+    <ExpressionListRow title="item.name" />
+  </template>
+</div>

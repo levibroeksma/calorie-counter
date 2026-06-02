@@ -1,0 +1,80 @@
+---
+import Button from "../ui/Button.astro";
+import Input from "../ui/Input.astro";
+import nl from "../../lib/copy/nl.js";
+
+/** @type {{ submitPrevent: string }} */
+const { submitPrevent } = Astro.props;
+
+const nameLabel = `'${nl.forms.name}'`;
+const refAmountLabel = `'${nl.forms.referenceAmount}'`;
+const unitLabel = `'${nl.forms.unit}'`;
+const caloriesLabel = `'${nl.macros.calories}'`;
+const proteinLabel = `'${nl.macros.protein}'`;
+const fibresLabel = `'${nl.macros.fibres}'`;
+const fatsLabel = `'${nl.macros.fats}'`;
+const carbsLabel = `'${nl.macros.carbs}'`;
+const saveLabel = `'${nl.buttons.save}'`;
+const gramsLabel = `'${nl.units.grams}'`;
+const mlLabel = `'${nl.units.milliliters}'`;
+---
+
+<form
+  class="min-h-0 flex-1 space-y-3 overflow-y-auto overscroll-contain pr-2"
+  @submit.prevent={submitPrevent}
+>
+  <Input label={nameLabel} model="$store.modalStore.form.name" />
+  <Input
+    label={refAmountLabel}
+    model="$store.modalStore.form.referenceAmount"
+    htmlType="number"
+    min="1"
+    step="1"
+  />
+  <label class="block">
+    <span class="mb-1 block text-sm text-slate-300" x-text={unitLabel}></span>
+    <select
+      class="w-full rounded-app border border-slate-700 bg-slate-900 px-3 py-2 text-slate-100"
+      x-model="$store.modalStore.form.referenceUnit"
+    >
+      <option value="g" x-text={gramsLabel}></option>
+      <option value="ml" x-text={mlLabel}></option>
+    </select>
+  </label>
+  <Input
+    label={caloriesLabel}
+    model="$store.modalStore.form.macros.calories"
+    htmlType="number"
+    min="0"
+    step="0.1"
+  />
+  <Input
+    label={proteinLabel}
+    model="$store.modalStore.form.macros.protein"
+    htmlType="number"
+    min="0"
+    step="0.1"
+  />
+  <Input
+    label={fibresLabel}
+    model="$store.modalStore.form.macros.fibres"
+    htmlType="number"
+    min="0"
+    step="0.1"
+  />
+  <Input
+    label={fatsLabel}
+    model="$store.modalStore.form.macros.fats"
+    htmlType="number"
+    min="0"
+    step="0.1"
+  />
+  <Input
+    label={carbsLabel}
+    model="$store.modalStore.form.macros.carbs"
+    htmlType="number"
+    min="0"
+    step="0.1"
+  />
+  <Button text={saveLabel} type="submit" :disabled="$store.appStore.isSaving" />
+</form>

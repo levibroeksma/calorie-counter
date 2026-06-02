@@ -1,0 +1,12 @@
+---
+import PreferencesForm from "@components/forms/PreferencesForm.astro";
+import AppLayout from "@layouts/AppLayout.astro";
+import nl from "@lib/copy/nl.js";
+---
+
+<AppLayout title={nl.pages.settings}>
+  <main class="p-4" x-data="settingsPage()">
+    <h1 class="text-lg font-semibold text-slate-100">{nl.pages.settings}</h1>
+    <PreferencesForm />
+  </main>
+</AppLayout>

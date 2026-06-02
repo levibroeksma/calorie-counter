@@ -1,0 +1,16 @@
+---
+
+---
+
+<div
+  class="pointer-events-none fixed top-0 right-0 z-50 p-4 pt-[calc(1rem+var(--spacing-safe-top))] pr-[calc(1rem+var(--spacing-safe-right))]"
+>
+  <div
+    x-show="$store.appStore.ui.toast"
+    x-cloak
+    x-text="$store.appStore.ui.toast?.message"
+    class="pointer-events-auto max-w-[min(100vw-2rem,20rem)] rounded-app px-4 py-3 text-sm font-medium shadow-lg"
+    :class="$store.appStore.ui.toast ? (($store.appStore.ui.toast.phase === 'out' ? 'animate-toast-out' : 'animate-toast-in') + ' ' + ($store.appStore.ui.toast.type === 'error' ? 'bg-danger text-danger-foreground' : 'bg-slate-800 text-accent border border-accent')) : ''"
+  >
+  </div>
+</div>

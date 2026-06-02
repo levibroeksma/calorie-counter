@@ -1,0 +1,30 @@
+---
+import nl from "@lib/copy/nl.js";
+---
+
+<div class="mt-4 flex justify-center">
+  <label class="inline-flex cursor-pointer items-center gap-3">
+    <span
+      class="select-none text-sm font-medium"
+      :class="$store.appStore.ui.trendPeriodDays === 7 ? 'text-slate-100' : 'text-slate-500'"
+      x-text=`'${nl.trends.period7}'`
+    >
+    </span>
+    <input
+      type="checkbox"
+      class="peer sr-only"
+      :checked="$store.appStore.ui.trendPeriodDays === 30"
+      @change="setPeriod($event.target.checked ? 30 : 7)"
+    />
+    <div
+      class="relative h-5 w-9 shrink-0 rounded-full bg-slate-700 peer-checked:bg-accent peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-accent after:absolute after:start-[2px] after:top-[2px] after:h-4 after:w-4 after:rounded-full after:bg-white after:transition-all after:content-[''] peer-checked:after:translate-x-full"
+    >
+    </div>
+    <span
+      class="select-none text-sm font-medium"
+      :class="$store.appStore.ui.trendPeriodDays === 30 ? 'text-slate-100' : 'text-slate-500'"
+      x-text=`'${nl.trends.period30}'`
+    >
+    </span>
+  </label>
+</div>

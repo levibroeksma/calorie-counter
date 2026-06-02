@@ -1,0 +1,33 @@
+---
+import nl from "../../lib/copy/nl.js";
+import Skeleton from "@ui/Skeleton.astro";
+import CatalogRow from "./CatalogRow.astro";
+
+const emptyLabel = `'${nl.empty.catalog}'`;
+---
+
+<div>
+  <ul x-show="!$store.appStore.hydrated" class="mt-4 divide-y divide-slate-800">
+    {
+      Array.from({ length: 5 }).map(() => (
+        <li class="py-3">
+          <Skeleton class="h-4 w-full max-w-xs" />
+        </li>
+      ))
+    }
+  </ul>
+  <div x-show="$store.appStore.hydrated" x-cloak>
+    <ul x-show="catalogRows.length > 0" class="mt-4 divide-y divide-slate-800">
+      <template x-for="(row, index) in catalogRows" :key="row.id">
+        <CatalogRow line="row.line" editClick="openEditById(row.id)" />
+      </template>
+    </ul>
+    <p
+      x-show="catalogRows.length === 0"
+      x-cloak
+      class="mt-4 py-8 text-center text-sm text-slate-500"
+      x-text={emptyLabel}
+    >
+    </p>
+  </div>
+</div>

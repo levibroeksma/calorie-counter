@@ -1,0 +1,52 @@
+---
+import CatalogEditPanel from "../components/catalog/CatalogEditPanel.astro";
+import CatalogList from "../components/catalog/CatalogList.astro";
+import CatalogForm from "../components/forms/CatalogForm.astro";
+import Button from "../components/ui/Button.astro";
+import AppLayout from "../layouts/AppLayout.astro";
+import nl from "../lib/copy/nl.js";
+
+const addItemLabel = `'${nl.buttons.addCatalogItem}'`;
+const searchPlaceholder = `'${nl.forms.searchItem}'`;
+---
+
+<AppLayout title={nl.pages.catalog}>
+  <main class="p-4" x-data="catalogPage()">
+    <div class="mb-4 flex items-center justify-between gap-3">
+      <h1 class="text-lg font-semibold text-slate-100">{nl.pages.catalog}</h1>
+      <Button text={addItemLabel} click="openAdd()" variant="ghost" />
+    </div>
+    <label class="block">
+      <span class="mb-1 block text-sm text-slate-300"
+        >{nl.forms.searchItem}</span
+      >
+      <input
+        type="search"
+        class="w-full rounded-app border border-slate-700 bg-slate-900 px-3 py-2 text-slate-100"
+        :placeholder={searchPlaceholder}
+        x-model="search"
+      />
+    </label>
+    <CatalogList />
+  </main>
+
+  <div slot="modal" class="flex h-full min-h-0 flex-col overflow-hidden">
+    <template x-if="$store.modalStore.activeForm === 'catalogAdd'">
+      <div
+        x-show="$store.modalStore.activeForm === 'catalogAdd'"
+        class="flex h-full min-h-0 flex-col overflow-hidden"
+      >
+        <CatalogForm submitPrevent="$store.appStore.submitCatalogAdd()" />
+      </div>
+    </template>
+    <template x-if="$store.modalStore.activeForm === 'catalogEdit'">
+      <div
+        x-show="$store.modalStore.activeForm === 'catalogEdit'"
+        x-data="catalogPage()"
+        class="flex h-full min-h-0 flex-col overflow-hidden"
+      >
+        <CatalogEditPanel />
+      </div>
+    </template>
+  </div>
+</AppLayout>

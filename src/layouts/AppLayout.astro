@@ -1,0 +1,30 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import BottomNav from "@ui/BottomNav.astro";
+import ConfirmDialog from "@ui/ConfirmDialog.astro";
+import Modal from "@ui/Modal.astro";
+import Toast from "@ui/Toast.astro";
+
+const { title } = Astro.props;
+---
+
+<BaseLayout title={title}>
+  <Toast />
+  <ConfirmDialog />
+  <div
+    class="mx-auto flex-1 w-full max-w-lg pb-[calc(var(--spacing-nav-height)+var(--spacing-safe-bottom))]"
+  >
+    <slot />
+  </div>
+  <BottomNav />
+  <Modal>
+    <slot name="modal" />
+  </Modal>
+  <script>
+    import { isLoggedIn } from "../lib/auth/session.client.js";
+
+    if (!isLoggedIn()) {
+      window.location.replace("/login");
+    }
+  </script>
+</BaseLayout>

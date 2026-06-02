@@ -1,0 +1,104 @@
+[
+  {
+    "id": 1,
+    "name": "Volkoren brood",
+    "referenceAmount": 100,
+    "referenceUnit": "g",
+    "macros": {
+      "calories": 247,
+      "protein": 9.0,
+      "fibres": 7.0,
+      "fats": 2.5,
+      "carbs": 43.0
+    }
+  },
+  {
+    "id": 2,
+    "name": "Kipfilet",
+    "referenceAmount": 150,
+    "referenceUnit": "g",
+    "macros": {
+      "calories": 248,
+      "protein": 46.5,
+      "fibres": 0,
+      "fats": 5.4,
+      "carbs": 0
+    }
+  },
+  {
+    "id": 3,
+    "name": "Griekse yoghurt",
+    "referenceAmount": 150,
+    "referenceUnit": "g",
+    "macros": {
+      "calories": 146,
+      "protein": 15.0,
+      "fibres": 0,
+      "fats": 8.0,
+      "carbs": 6.0
+    }
+  },
+  {
+    "id": 4,
+    "name": "Appel",
+    "referenceAmount": 180,
+    "referenceUnit": "g",
+    "macros": {
+      "calories": 94,
+      "protein": 0.5,
+      "fibres": 4.4,
+      "fats": 0.3,
+      "carbs": 25.0
+    }
+  },
+  {
+    "id": 5,
+    "name": "Havermout",
+    "referenceAmount": 80,
+    "referenceUnit": "g",
+    "macros": {
+      "calories": 303,
+      "protein": 10.4,
+      "fibres": 8.0,
+      "fats": 5.6,
+      "carbs": 51.2
+    }
+  },
+  {
+    "id": 6,
+    "name": "Volle melk",
+    "referenceAmount": 250,
+    "referenceUnit": "ml",
+    "macros": {
+      "calories": 155,
+      "protein": 8.3,
+      "fibres": 0,
+      "fats": 8.5,
+      "carbs": 12.0
+    }
+  },
+  {
+    "id": 7,
+    "name": "Sinaasappelsap",
+    "referenceAmount": 200,
+    "referenceUnit": "ml",
+    "macros": {
+      "calories": 88,
+      "protein": 1.4,
+      "carbs": 20.0
+    }
+  },
+  {
+    "id": 8,
+    "name": "Komkommer",
+    "referenceAmount": 200,
+    "referenceUnit": "g",
+    "macros": {
+      "calories": 30,
+      "protein": 1.4,
+      "fibres": 1.0,
+      "fats": 0.2,
+      "carbs": 5.8
+    }
+  }
+]

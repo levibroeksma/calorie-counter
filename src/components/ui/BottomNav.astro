@@ -1,0 +1,35 @@
+---
+import nl from "@lib/copy/nl.js";
+
+const path = Astro.url.pathname;
+
+const tabs = [
+  { href: "/", label: nl.nav.today },
+  { href: "/trends", label: nl.nav.trends },
+  { href: "/settings", label: nl.nav.settings },
+  { href: "/catalog", label: nl.nav.catalog },
+];
+---
+
+<nav
+  class="border-t border-slate-800 bg-slate-950/95 pb-[var(--spacing-safe-bottom)]"
+>
+  <div
+    class="mx-auto flex h-[var(--spacing-nav-height)] max-w-lg items-stretch px-1"
+  >
+    {
+      tabs.map((tab) => {
+        const active = tab.href === "/" ? path === "/" : path === tab.href;
+
+        return (
+          <a
+            href={tab.href}
+            class={`flex flex-1 flex-col items-center justify-center gap-0.5 py-2 text-xs font-medium ${active ? "text-accent" : "text-slate-400"}`}
+          >
+            {tab.label}
+          </a>
+        );
+      })
+    }
+  </div>
+</nav>

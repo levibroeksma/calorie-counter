@@ -1,0 +1,21 @@
+---
+import nl from "@lib/copy/nl.js";
+import Skeleton from "@ui/Skeleton.astro";
+---
+
+<section class="mt-4">
+  <h2 class="mb-2 text-base font-medium text-slate-200">
+    {nl.trends.chartTitle}
+  </h2>
+  <div x-show="!$store.appStore.hydrated" class="relative h-72 w-full">
+    <Skeleton class="h-full w-full rounded-app" />
+  </div>
+  <div
+    x-show="$store.appStore.hydrated"
+    x-cloak
+    class="relative h-72 w-full"
+    x-data="trendChart()"
+  >
+    <canvas x-ref="chartCanvas" class="h-full w-full"></canvas>
+  </div>
+</section>

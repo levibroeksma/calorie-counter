@@ -1,0 +1,35 @@
+---
+import nl from "../../lib/copy/nl.js";
+---
+
+<div
+  x-show="$store.modalStore.isOpen"
+  x-cloak
+  class="fixed inset-0 z-40 flex items-stretch justify-center p-4"
+  @keydown.escape.window="$store.appStore.ui.confirmRemoveIndex == null && $store.modalStore.close()"
+>
+  <div class="fixed inset-0 z-0 bg-black/70" @click="$store.modalStore.close()">
+  </div>
+  <div
+    class="relative z-10 flex h-full min-h-0 w-full max-w-md flex-col overflow-hidden rounded-app-lg bg-slate-900 p-4 shadow-xl animate-modal-in"
+    @click.stop
+  >
+    <div class="mb-4 flex shrink-0 items-start justify-between gap-3">
+      <h2
+        class="text-lg font-semibold text-slate-100"
+        x-text="$store.modalStore.title"
+      >
+      </h2>
+      <button
+        type="button"
+        class="shrink-0 rounded-app px-2 py-1 text-sm text-slate-400 hover:text-slate-100"
+        @click="$store.modalStore.close()"
+      >
+        {nl.buttons.cancel}
+      </button>
+    </div>
+    <div class="flex min-h-0 flex-1 flex-col overflow-hidden">
+      <slot />
+    </div>
+  </div>
+</div>

@@ -1,0 +1,42 @@
+---
+import nl from "@lib/copy/nl.js";
+---
+
+<div
+  x-show="$store.appStore.ui.confirmRemoveIndex != null"
+  x-cloak
+  class="fixed inset-0 z-50 flex items-center justify-center p-4"
+  @keydown.escape.window="$store.appStore.cancelRemoveConsumption()"
+>
+  <div
+    class="fixed inset-0 bg-black/70"
+    @click="$store.appStore.cancelRemoveConsumption()"
+  >
+  </div>
+  <div
+    class="relative z-10 w-full max-w-sm rounded-app-lg bg-slate-900 p-4 shadow-xl"
+    @click.stop
+  >
+    <p
+      class="mb-4 text-sm text-slate-200"
+      x-text=`'${nl.confirms.removeConsumption}'`
+    >
+    </p>
+    <div class="flex gap-2">
+      <button
+        type="button"
+        class="flex-1 rounded-app border border-slate-700 px-3 py-2 text-sm text-slate-300"
+        @click="$store.appStore.cancelRemoveConsumption()"
+        x-text=`'${nl.buttons.cancel}'`
+      >
+      </button>
+      <button
+        type="button"
+        class="flex-1 rounded-app bg-danger px-3 py-2 text-sm font-medium text-danger-foreground"
+        @click="$store.appStore.confirmRemoveConsumption()"
+        x-text=`'${nl.buttons.remove}'`
+      >
+      </button>
+    </div>
+  </div>
+</div>

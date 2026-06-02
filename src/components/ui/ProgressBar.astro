@@ -1,0 +1,36 @@
+---
+interface Props {
+  title: string;
+  value: string;
+  target: string;
+  targetLabel: string;
+  fillClass?: string;
+}
+
+const {
+  title,
+  value,
+  target,
+  targetLabel,
+  fillClass = "bg-accent",
+} = Astro.props;
+---
+
+<div class="space-y-1">
+  <div class="flex justify-between gap-2 text-sm">
+    <span class="text-slate-300" x-text={title}></span>
+    <span
+      class="tabular-nums text-slate-400"
+      x-text={`${value} + ' / ' + ${targetLabel}`}
+    >
+    </span>
+  </div>
+  <div class="h-2 overflow-hidden rounded-full bg-slate-800">
+    <div
+      class="h-full rounded-full transition-[width] duration-300"
+      :class={fillClass}
+      :style={`{ width: (${target} > 0 ? Math.min(100, (${value} / ${target}) * 100) : 0) + '%' }`}
+    >
+    </div>
+  </div>
+</div>

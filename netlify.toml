@@ -1,0 +1,5 @@
+# Build command (astro build) and publish (dist) are auto-detected for Astro.
+# See https://docs.netlify.com/build/frameworks/framework-setup-guides/astro/
+
+[build.environment]
+  NODE_VERSION = "22"

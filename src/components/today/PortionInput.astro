@@ -1,0 +1,49 @@
+---
+import nl from "../../lib/copy/nl.js";
+
+const amountLabel = `'${nl.forms.amount}'`;
+const unitLabel = `'${nl.forms.unit}'`;
+const previewLabel = `'${nl.forms.portionPreview}'`;
+const gramsLabel = `'${nl.units.grams}'`;
+const mlLabel = `'${nl.units.milliliters}'`;
+---
+
+<div
+  x-show="$store.appStore.ui.comboboxSelectedId != null"
+  x-cloak
+  class="mt-4 space-y-3 rounded-app border border-slate-800 p-3"
+>
+  <div class="grid grid-cols-2 gap-3">
+    <label class="block">
+      <span class="mb-1 block text-sm text-slate-300" x-text={amountLabel}
+      ></span>
+      <input
+        type="number"
+        min="1"
+        step="1"
+        required
+        class="w-full rounded-app border border-slate-700 bg-slate-900 px-3 py-2 text-slate-100"
+        x-model.number="$store.appStore.ui.portionAmount"
+      />
+    </label>
+    <label class="block">
+      <span class="mb-1 block text-sm text-slate-300" x-text={unitLabel}></span>
+      <select
+        class="w-full rounded-app border border-slate-700 bg-slate-900 px-3 py-2 text-slate-100"
+        x-model="$store.appStore.ui.portionUnit"
+        :disabled="$store.appStore.getSelectedItem() != null"
+      >
+        <option value="g" x-text={gramsLabel}></option>
+        <option value="ml" x-text={mlLabel}></option>
+      </select>
+    </label>
+  </div>
+  <div
+    x-show="$store.appStore.getPortionPreview()"
+    x-cloak
+    class="text-sm text-slate-400"
+  >
+    <span class="text-slate-500" x-text={previewLabel}></span>
+    <span class="ml-1" x-text="portionPreviewText"></span>
+  </div>
+</div>

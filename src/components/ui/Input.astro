@@ -1,0 +1,46 @@
+---
+interface Props {
+  label: string;
+  model: string;
+  type?: string;
+  htmlType?: "text" | "number" | "select";
+  step?: string;
+  min?: string;
+  inputClass?: string;
+}
+
+const {
+  label,
+  model,
+  type = "'text'",
+  htmlType,
+  step,
+  min,
+  inputClass = '',
+} = Astro.props;
+
+const fieldClass = `w-full rounded-app border border-slate-700 bg-slate-900 px-3 py-2 text-slate-100 ${inputClass ? inputClass : ''}`;
+---
+
+<label class="block">
+  <span class="mb-1 block text-sm text-slate-300" x-text={label}></span>
+  {
+    htmlType === 'number' ? (
+      <input
+        class={fieldClass}
+        type="number"
+        x-model.number={model}
+        step={step}
+        min={min}
+      />
+    ) : (
+      <input
+        class={fieldClass}
+        :type={type}
+        x-model={model}
+        step={step}
+        min={min}
+      />
+    )
+  }
+</label>

@@ -1,0 +1,66 @@
+---
+import Button from "@ui/Button.astro";
+import Dropdown from "@ui/Dropdown.astro";
+import Input from "@ui/Input.astro";
+import nl from "@lib/copy/nl.js";
+import UnitDropdown from "@ui/UnitDropdown.astro";
+
+const inputFields = [
+  {
+    label: `'${nl.macros.calories}'`,
+    model: "$store.modalStore.form.macros.calories",
+    htmlType: "number",
+    min: "0",
+    step: "0.1",
+  },
+  {
+    label: `'${nl.macros.protein}'`,
+    model: "$store.modalStore.form.macros.protein",
+    htmlType: "number",
+    min: "0",
+    step: "0.1",
+  },
+  {
+    label: `'${nl.macros.fibres}'`,
+    model: "$store.modalStore.form.macros.fibres",
+    htmlType: "number",
+    min: "0",
+    step: "0.1",
+  },
+];
+---
+
+<form
+  class="min-h-0 flex-1 space-y-3 overflow-y-auto overscroll-contain pr-2"
+  @submit.prevent="$store.appStore.submitQuickAdd()"
+>
+  <Input label={`'${nl.forms.name}'`} model="$store.modalStore.form.name" />
+  <UnitDropdown />
+  {
+    inputFields.map((field) => {
+      if (field.htmlType === "select") {
+        return (
+          <Dropdown
+            label={field.label}
+            model={field.model}
+            options={field.options ?? []}
+          />
+        );
+      }
+      return (
+        <Input
+          label={field.label}
+          model={field.model}
+          htmlType={field.htmlType as "number" | "select" | "text"}
+          min={field.min}
+          step={field.step}
+        />
+      );
+    })
+  }
+  <Button
+    text={`'${nl.buttons.save}'`}
+    type="submit"
+    :disabled="$store.appStore.isSaving"
+  />
+</form>

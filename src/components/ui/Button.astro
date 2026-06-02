@@ -1,0 +1,35 @@
+---
+interface Props {
+  text: string;
+  click?: string;
+  type?: "button" | "submit" | "reset";
+  variant?: "primary" | "ghost" | "danger";
+  disabled?: string;
+  class?: string;
+}
+
+const {
+  text,
+  click,
+  type = "button",
+  variant = "primary",
+  disabled = "false",
+  class: extraClass = "",
+} = Astro.props;
+
+const variantClass =
+  variant === "danger"
+    ? "bg-danger text-danger-foreground"
+    : variant === "ghost"
+      ? "bg-transparent text-slate-300 hover:text-slate-100"
+      : "bg-accent text-accent-foreground";
+---
+
+<button
+  type={type}
+  class={`inline-flex min-h-11 w-full items-center justify-center rounded-app px-4 py-2 text-sm font-medium touch-manipulation disabled:opacity-50 ${variantClass} ${extraClass ? extraClass : ""}`}
+  @click={click}
+  :disabled={disabled}
+>
+  <span x-text={text}></span>
+</button>
