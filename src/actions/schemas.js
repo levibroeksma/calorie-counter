@@ -2,17 +2,19 @@ import { z } from 'astro/zod';
 
 export const referenceUnitSchema = z.enum(['g', 'ml']);
 
+const nonNegativeNumber = z.coerce.number().min(0);
+
 export const macrosSchema = z.object({
-  calories: z.number().min(0),
-  protein: z.number().min(0),
-  fibres: z.number().min(0).optional(),
-  fats: z.number().min(0).optional(),
-  carbs: z.number().min(0).optional(),
+  calories: nonNegativeNumber,
+  protein: nonNegativeNumber,
+  fibres: nonNegativeNumber.optional(),
+  fats: nonNegativeNumber.optional(),
+  carbs: nonNegativeNumber.optional(),
 });
 
 export const foodItemFieldsSchema = z.object({
   name: z.string().min(1),
-  referenceAmount: z.number().int().min(1),
+  referenceAmount: z.coerce.number().int().min(1),
   referenceUnit: referenceUnitSchema,
   macros: macrosSchema,
 });
@@ -22,11 +24,11 @@ export const writeTokenSchema = z.object({
 });
 
 export const preferencesSchema = z.object({
-  targetCalories: z.number().min(0),
-  targetProtein: z.number().min(0),
-  targetFibres: z.number().min(0),
-  targetFats: z.number().min(0),
-  targetCarbs: z.number().min(0),
+  targetCalories: nonNegativeNumber,
+  targetProtein: nonNegativeNumber,
+  targetFibres: nonNegativeNumber,
+  targetFats: nonNegativeNumber,
+  targetCarbs: nonNegativeNumber,
 });
 
 export const createItemInputSchema = z
@@ -34,7 +36,7 @@ export const createItemInputSchema = z
     ...writeTokenSchema.shape,
     ...foodItemFieldsSchema.shape,
     logToToday: z.boolean().optional().default(false),
-    amount: z.number().int().min(1).optional(),
+    amount: z.coerce.number().int().min(1).optional(),
     unit: referenceUnitSchema.optional(),
   })
   .superRefine((value, context) => {
@@ -61,7 +63,7 @@ export const createItemInputSchema = z
 
 export const updateItemInputSchema = z.object({
   ...writeTokenSchema.shape,
-  id: z.number().int(),
+  id: z.coerce.number().int(),
   ...foodItemFieldsSchema.shape,
 });
 
@@ -72,7 +74,7 @@ export const updatePreferencesInputSchema = z.object({
 
 export const addConsumptionInputSchema = z.object({
   ...writeTokenSchema.shape,
-  itemId: z.number().int(),
-  amount: z.number().int().min(1),
+  itemId: z.coerce.number().int(),
+  amount: z.coerce.number().int().min(1),
   unit: referenceUnitSchema,
 });
