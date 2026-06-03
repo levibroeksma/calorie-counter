@@ -85,8 +85,6 @@ export default function todayPage() {
           name: '',
           referenceAmount: 100,
           referenceUnit: 'g',
-          amount: 100,
-          unit: 'g',
           macros: {
             calories: 0,
             protein: 0,

@@ -91,6 +91,7 @@ export function buildTrendChartConfig(series, preferences) {
         y: {
           type: 'linear',
           position: 'left',
+          min: 0,
           title: {
             display: true,
             text: nl.units.kcal,
@@ -102,6 +103,7 @@ export function buildTrendChartConfig(series, preferences) {
         y1: {
           type: 'linear',
           position: 'right',
+          min: 0,
           title: {
             display: true,
             text: nl.units.g,
