@@ -5,7 +5,7 @@ import {
   resetChartLibraryCache,
   updateTrendChart,
 } from '../charts/trendChart.client.js';
-import { buildTrendSeries, TREND_PERIOD_DAYS } from '../domain/trend.service.js';
+import { buildTrendSeries } from '../domain/trend.service.js';
 
 export default function trendChart() {
   let chart = null;
