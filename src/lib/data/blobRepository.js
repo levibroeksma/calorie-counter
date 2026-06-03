@@ -1,5 +1,11 @@
 import { getStore } from '@netlify/blobs';
+import { shouldUseSeedData } from '../config/environments.js';
 import { assertDataRepository } from './repository.contract.js';
+import {
+  getEmptyConsumption,
+  getEmptyItems,
+  getEmptyPreferences,
+} from './emptyRepositoryDefaults.js';
 import { BLOB_STORE_KEYS } from './repository.types.js';
 import {
   loadSeedConsumption,
@@ -24,17 +30,17 @@ async function readJsonKey(store, key) {
   return value;
 }
 
-async function readOrSeed(store, key, loadSeed) {
+async function readOrInitialize(store, key, { loadSeed, loadEmpty }) {
   const existing = await readJsonKey(store, key);
 
   if (existing !== null) {
     return clone(existing);
   }
 
-  const seeded = await loadSeed();
-  await store.setJSON(key, seeded);
+  const initial = shouldUseSeedData() ? await loadSeed() : loadEmpty();
+  await store.setJSON(key, initial);
 
-  return clone(seeded);
+  return clone(initial);
 }
 
 function getDefaultBlobStore() {
@@ -47,7 +53,10 @@ export function createBlobRepository(options = {}) {
   const repository = {
     async getItems() {
       return (
-        readOrSeed(store, BLOB_STORE_KEYS.ITEMS, loadSeedItems)
+        readOrInitialize(store, BLOB_STORE_KEYS.ITEMS, {
+          loadSeed: loadSeedItems,
+          loadEmpty: getEmptyItems,
+        })
       );
     },
 
@@ -57,7 +66,10 @@ export function createBlobRepository(options = {}) {
 
     async getConsumption() {
       return (
-        readOrSeed(store, BLOB_STORE_KEYS.CONSUMPTION, loadSeedConsumption)
+        readOrInitialize(store, BLOB_STORE_KEYS.CONSUMPTION, {
+          loadSeed: loadSeedConsumption,
+          loadEmpty: getEmptyConsumption,
+        })
       );
     },
 
@@ -67,7 +79,10 @@ export function createBlobRepository(options = {}) {
 
     async getPreferences() {
       return (
-        readOrSeed(store, BLOB_STORE_KEYS.PREFERENCES, loadSeedPreferences)
+        readOrInitialize(store, BLOB_STORE_KEYS.PREFERENCES, {
+          loadSeed: loadSeedPreferences,
+          loadEmpty: getEmptyPreferences,
+        })
       );
     },
 

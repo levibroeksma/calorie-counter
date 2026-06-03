@@ -1,4 +1,10 @@
+import { shouldUseSeedData } from '../config/environments.js';
 import { assertDataRepository } from './repository.contract.js';
+import {
+  getEmptyConsumption,
+  getEmptyItems,
+  getEmptyPreferences,
+} from './emptyRepositoryDefaults.js';
 import { loadSeedData } from './seedLoader.js';
 
 function clone(value) {
@@ -22,18 +28,24 @@ export function createMemoryRepository() {
 
     if (!seeding) {
       seeding = (async () => {
-        const seed = await loadSeedData();
+        const initial = shouldUseSeedData()
+          ? await loadSeedData()
+          : {
+              items: getEmptyItems(),
+              consumption: getEmptyConsumption(),
+              preferences: getEmptyPreferences(),
+            };
 
         if (items === null) {
-          items = seed.items;
+          items = initial.items;
         }
 
         if (consumption === null) {
-          consumption = seed.consumption;
+          consumption = initial.consumption;
         }
 
         if (preferences === null) {
-          preferences = seed.preferences;
+          preferences = initial.preferences;
         }
       })().finally(() => {
         seeding = null;
