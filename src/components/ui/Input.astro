@@ -29,7 +29,9 @@ const fieldClass = `w-full rounded-app border border-slate-700 bg-slate-900 px-3
       <input
         class={fieldClass}
         type="text"
+        inputmode="decimal"
         x-model.number={model}
+        @input.capture="$event.target.value = $event.target.value.replace(',', '.')"
         step={step}
         min={min}
       />
