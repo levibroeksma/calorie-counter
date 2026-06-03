@@ -1,74 +1,83 @@
 ---
-import nl from "@lib/copy/nl.js";
 import ChevronDown from "@icons/ChevronDown.astro";
 
-const unitObject =   {
-    label: `'${nl.forms.amount}'`,
-    model: "$store.modalStore.form.referenceAmount",
-    htmlType: "number",
-    min: "1",
-    step: "1",
+interface Props {
+  data: {
+    unitObject: {
+      label: string;
+      model: string;
+      min?: string;
+      step?: string;
+      required?: boolean;
+    };
+    dropdownOptions: {
+      label: string;
+      model: string;
+      options: Array<{ label: string; value: string }>;
+      disabled?: string;
+    };
   };
-const dropdownOptions = {
-    label: `'${nl.forms.unit}'`,
-    model: "$store.modalStore.form.referenceUnit",
-    htmlType: "select",
-    options: [
-      { label: `'${nl.units.grams}'`, value: "g" },
-      { label: `'${nl.units.milliliters}'`, value: "ml" },
-    ],
-  };
+}
+
+const { data } = Astro.props;
+const amountMin = data.unitObject.min ?? "1";
+const amountStep = data.unitObject.step ?? "1";
+const dropdownDisabled = data.dropdownOptions.disabled;
 ---
 
-<label class="w-1/5">
-    <span class="mb-1 block text-sm text-slate-300" x-text={`${unitObject.label} + '/' + ${dropdownOptions.label}`}></span>
+<label class="block">
+  <span
+    class="mb-1 block text-sm text-slate-300"
+    x-text={`${data.unitObject.label} + '/' + ${data.dropdownOptions.label}`}
+  ></span>
 </label>
 <div class="flex w-full">
-    <input
-        class="w-full rounded-l-app border border-slate-700 bg-slate-900 px-3 py-2 text-slate-100"
-        type="number"
-        x-model={unitObject.model}
-        step="1"
-        min="1"
-    />
+  <input
+    class="w-full rounded-l-app border border-slate-700 bg-slate-900 px-3 py-2 text-slate-100"
+    type="number"
+    x-model={data.unitObject.model}
+    min={amountMin}
+    step={amountStep}
+    required={data.unitObject.required || undefined}
+  />
 
-    <div x-data="{ open: false }" @click.outside="open = false" class="w-1/5">
-        <button
-            type="button"
-            x-ref="trigger"
-            class="w-full rounded-r-app h-full translate-x-[-1px] border border-slate-700 bg-slate-900 px-3 py-2 text-slate-100 flex items-center justify-between gap-2 text-left"
-            @click="open = !open"
-        >
-        {
-            dropdownOptions.options.map((option) => (
-            <span
-                x-show={`${dropdownOptions.model} === '${option.value}'`}
-                x-text={option.label}
+  <div x-data="{ open: false }" @click.outside="open = false" class="w-1/5">
+    <button
+      type="button"
+      x-ref="trigger"
+      class="flex h-full w-full translate-x-[-1px] items-center justify-between gap-2 rounded-r-app border border-slate-700 bg-slate-900 px-3 py-2 text-left text-slate-100 disabled:cursor-not-allowed disabled:opacity-50"
+      @click="if (!$el.disabled) open = !open"
+      {...(dropdownDisabled ? { ":disabled": dropdownDisabled } : {})}
+    >
+      {
+        data.dropdownOptions.options.map((option) => (
+          <span
+            x-show={`${data.dropdownOptions.model} === '${option.value}'`}
+            x-text={option.label}
+          />
+        ))
+      }
+      <ChevronDown class="size-4 shrink-0 text-slate-400" />
+    </button>
+    <ul
+      x-show="open"
+      x-cloak
+      x-anchor.fixed.bottom-start.offset.4="$refs.trigger"
+      class="z-50 max-h-48 overflow-y-auto rounded-app border border-slate-700 bg-slate-900 py-1 shadow-lg"
+    >
+      {
+        data.dropdownOptions.options.map((option) => (
+          <li>
+            <button
+              type="button"
+              class="w-full px-3 py-2 text-left text-slate-100 hover:bg-slate-800"
+              @click={`${data.dropdownOptions.model} = '${option.value}'; open = false`}
+              :class={`${data.dropdownOptions.model} === '${option.value}' ? 'bg-slate-800' : ''`}
+              x-text={option.label}
             />
-            ))
-        }
-        <ChevronDown class="size-4 shrink-0 text-slate-400" />
-        </button>
-        <ul
-            x-show="open"
-            x-cloak
-            x-anchor.fixed.bottom-start.offset.4="$refs.trigger"
-            class="z-50 max-h-48 overflow-y-auto rounded-app border border-slate-700 bg-slate-900 py-1 shadow-lg"
-        >
-        {
-            dropdownOptions.options.map((option) => (
-            <li>
-                <button
-                    type="button"
-                    class="w-full px-3 py-2 text-left text-slate-100 hover:bg-slate-800"
-                    @click={`${dropdownOptions.model} = '${option.value}'; open = false`}
-                    :class={`${dropdownOptions.model} === '${option.value}' ? 'bg-slate-800' : ''`}
-                    x-text={option.label}
-                />
-            </li>
-            ))
-        }
-        </ul>
+          </li>
+        ))
+      }
+    </ul>
   </div>
-  
 </div>
