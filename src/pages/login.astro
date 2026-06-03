@@ -5,7 +5,10 @@ import nl from "../lib/copy/nl.js";
 ---
 
 <LoginLayout title={nl.pages.login}>
-  <main class="flex flex-1 flex-col justify-center p-6" x-data="loginPage()">
+  <main
+    class="flex flex-1 flex-col justify-center p-6 h-full"
+    x-data="loginPage()"
+  >
     <h1 class="mb-6 text-center text-xl font-semibold text-slate-100">
       {nl.app.title}
     </h1>

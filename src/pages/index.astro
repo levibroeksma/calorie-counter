@@ -11,7 +11,9 @@ import nl from "@lib/copy/nl.js";
 
 <AppLayout title={nl.pages.today}>
   <main class="p-4" x-data="todayPage()">
-    <h1 class="mb-4 text-lg font-semibold text-slate-100">{nl.pages.today}</h1>
+    <h1 class="mb-4 text-lg font-semibold text-slate-100 text-center">
+      {nl.pages.today}
+    </h1>
     <MacroBars />
     <section class="mt-6 space-y-4">
       <ItemCombobox />

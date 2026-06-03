@@ -7,7 +7,7 @@ const passwordLabel = `'${nl.auth.password}'`;
 const loginLabel = `'${nl.buttons.login}'`;
 ---
 
-<form class="space-y-4" @submit.prevent="submit">
+<form class="space-y-4 w-full" @submit.prevent="submit">
   <Input label={passwordLabel} model="password" type="'password'" />
   <p class="text-sm text-danger" x-show="error" x-cloak x-text="error"></p>
   <Button

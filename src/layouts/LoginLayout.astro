@@ -1,15 +1,17 @@
 ---
-import BaseLayout from './BaseLayout.astro';
-import Toast from '../components/ui/Toast.astro';
-
-/** @typedef {{ title?: string }} Props */
-
+import BaseLayout from "./BaseLayout.astro";
+import Toast from "../components/ui/Toast.astro";
+interface Props {
+  title?: string;
+}
 const { title } = Astro.props;
 ---
 
 <BaseLayout title={title}>
   <Toast />
-  <div class="mx-auto flex min-h-dvh max-w-lg flex-col">
+  <div
+    class="mx-auto flex-1 w-full max-w-lg pb-[calc(var(--spacing-nav-height)+var(--spacing-safe-bottom))]"
+  >
     <slot />
   </div>
 </BaseLayout>

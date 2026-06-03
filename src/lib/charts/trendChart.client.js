@@ -71,8 +71,12 @@ export function buildTrendChartConfig(series, preferences) {
       },
       plugins: {
         legend: {
+          position: 'bottom',
+          align: 'center',
           labels: {
             color: '#d4d4d8',
+            usePointStyle: true,
+            pointStyle: 'circle',
             filter: (legendItem, chartData) => {
               const dataset = chartData.datasets[legendItem.datasetIndex];
               return !dataset?.targetLine;
