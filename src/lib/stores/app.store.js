@@ -308,8 +308,8 @@ export default function appStore() {
         },
         {
           logToToday: true,
-          amount: form.amount,
-          unit: form.unit,
+          amount: form.referenceAmount,
+          unit: form.referenceUnit,
         },
       );
 

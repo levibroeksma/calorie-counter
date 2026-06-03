@@ -21,7 +21,7 @@ import nl from "@lib/copy/nl.js";
   </main>
 
   <div slot="modal" class="flex h-full min-h-0 flex-col overflow-hidden">
-    <template x-if="$store.modalStore.activeForm === 'catalogAdd'">
+    <template x-if="$store.modalStore.activeForm === 'consumption'">
       <div
         x-show="$store.modalStore.activeForm === 'consumption'"
         x-data="todayPage()"
