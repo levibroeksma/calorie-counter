@@ -20,6 +20,7 @@ interface Props {
 }
 
 const { data } = Astro.props;
+
 const amountMin = data.unitObject.min ?? "1";
 const amountStep = data.unitObject.step ?? "1";
 const dropdownDisabled = data.dropdownOptions.disabled;
