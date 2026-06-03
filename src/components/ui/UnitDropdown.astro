@@ -35,7 +35,7 @@ const dropdownDisabled = data.dropdownOptions.disabled;
   <input
     class="w-full rounded-l-app border border-slate-700 bg-slate-900 px-3 py-2 text-slate-100"
     type="number"
-    x-model.number={data.unitObject.model}
+    x-model={data.unitObject.model}
     min={amountMin}
     step={amountStep}
     required={data.unitObject.required || undefined}
