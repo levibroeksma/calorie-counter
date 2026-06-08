@@ -21,7 +21,7 @@ const { title } = Astro.props;
     <slot name="modal" />
   </Modal>
   <script>
-    import { isLoggedIn } from "../lib/auth/session.client.js";
+    import { isLoggedIn } from "@lib/auth/session.client.js";
 
     if (!isLoggedIn()) {
       window.location.replace("/login");
