@@ -1,7 +1,7 @@
 ---
-import nl from "../../lib/copy/nl.js";
+import nl from "@lib/copy/nl.js";
 import Skeleton from "@ui/Skeleton.astro";
-import ComboboxItemRow from "./ComboboxItemRow.astro";
+import ComboboxItemRow from "@today/ComboboxItemRow.astro";
 
 const searchPlaceholder = `'${nl.forms.searchItem}'`;
 const emptyLabel = `'${nl.empty.combobox}'`;
@@ -14,7 +14,9 @@ const emptyLabel = `'${nl.empty.combobox}'`;
   </div>
   <div x-show="$store.appStore.hydrated" x-cloak>
     <label class="block">
-      <span class="mb-1 block text-sm text-slate-300">{nl.forms.searchItem}</span>
+      <span class="mb-1 block text-sm text-slate-300"
+        >{nl.forms.searchItem}</span
+      >
       <input
         type="text"
         class="w-full rounded-app border border-slate-700 bg-slate-900 px-3 py-2 text-slate-100"
