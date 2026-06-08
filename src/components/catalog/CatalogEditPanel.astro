@@ -21,14 +21,14 @@ import CatalogForm from "@forms/CatalogForm.astro";
         type="button"
         class="flex-1 rounded-app bg-accent px-3 py-2 text-sm font-medium text-accent-foreground"
         @click="confirmCatalogEditSave()"
-        x-text={nl.buttons.save}
+        x-text={`'${nl.buttons.save}'`}
       >
       </button>
       <button
         type="button"
         class="flex-1 rounded-app border border-slate-700 px-3 py-2 text-sm text-slate-300"
         @click="cancelCatalogEditConfirm()"
-        x-text={nl.buttons.cancel}
+        x-text={`'${nl.buttons.cancel}'`}
       >
       </button>
     </div>
