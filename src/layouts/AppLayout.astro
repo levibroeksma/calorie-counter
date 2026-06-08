@@ -20,9 +20,7 @@ const { title }: Props = Astro.props;
 <BaseLayout title={title}>
   <Toast />
   <ConfirmDialog />
-  <div
-    class="mx-auto flex-1 w-full max-w-lg pb-[calc(var(--spacing-nav-height)+var(--spacing-safe-bottom))]"
-  >
+  <div class="mx-auto flex-1 flex w-full max-w-lg overflow-y-auto">
     <slot />
   </div>
   <BottomNav />
