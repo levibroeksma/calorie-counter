@@ -12,28 +12,30 @@ import CatalogForm from "@components/forms/CatalogForm.astro";
 ---
 
 <AppLayout title={nl.pages.catalog}>
-  <main class="p-4" x-data="catalogPage()">
-    <div class="mb-4 flex items-center justify-between gap-3">
-      <h1 class="text-lg font-semibold text-slate-100">{nl.pages.catalog}</h1>
-      <button
-        type="button"
-        class="shrink-0 rounded-app px-2 py-1 text-sm text-slate-400 hover:text-slate-100"
-        @click="openAdd()"
-      >
-        {nl.buttons.addCatalogItem}
-      </button>
+  <main class="p-4 min-h-0 flex flex-col flex-1" x-data="catalogPage()">
+    <div class="mb-4 flex flex-col gap-4">
+      <div class="mb-4 flex items-center justify-between gap-3">
+        <h1 class="text-lg font-semibold text-slate-100">{nl.pages.catalog}</h1>
+        <button
+          type="button"
+          class="shrink-0 rounded-app px-2 py-1 text-sm text-slate-400 hover:text-slate-100"
+          @click="openAdd()"
+        >
+          {nl.buttons.addCatalogItem}
+        </button>
+      </div>
+      <label class="block">
+        <span class="mb-1 block text-sm text-slate-300">
+          {nl.forms.searchItem}
+        </span>
+        <input
+          type="search"
+          class="w-full rounded-app border border-slate-700 bg-slate-900 px-3 py-2 text-slate-100"
+          :placeholder={nl.forms.searchItem}
+          x-model="search"
+        />
+      </label>
     </div>
-    <label class="block">
-      <span class="mb-1 block text-sm text-slate-300">
-        {nl.forms.searchItem}
-      </span>
-      <input
-        type="search"
-        class="w-full rounded-app border border-slate-700 bg-slate-900 px-3 py-2 text-slate-100"
-        :placeholder={nl.forms.searchItem}
-        x-model="search"
-      />
-    </label>
     <CatalogList />
   </main>
 

@@ -7,8 +7,8 @@ import Skeleton from "@ui/Skeleton.astro";
 import CatalogRow from "@catalog/CatalogRow.astro";
 ---
 
-<div>
-  <ul x-show="!$store.appStore.hydrated" class="mt-4 divide-y divide-slate-800">
+<div class="flex flex-col flex-1 min-h-0">
+  <ul x-show="!$store.appStore.hydrated" class="divide-y divide-slate-800">
     {
       Array.from({ length: 5 }).map(() => (
         <li class="py-3">
@@ -17,8 +17,15 @@ import CatalogRow from "@catalog/CatalogRow.astro";
       ))
     }
   </ul>
-  <div x-show="$store.appStore.hydrated" x-cloak>
-    <ul x-show="catalogRows.length > 0" class="mt-4 divide-y divide-slate-800">
+  <div
+    x-show="$store.appStore.hydrated"
+    x-cloak
+    class="flex min-h-0 flex-1 flex-col overflow-hidden"
+  >
+    <ul
+      x-show="catalogRows.length > 0"
+      class="mt-4 divide-y divide-slate-800 min-h-0 overflow-y-auto"
+    >
       <template x-for="(row, index) in catalogRows" :key="row.id">
         <CatalogRow line="row.line" editClick="openEditById(row.id)" />
       </template>
