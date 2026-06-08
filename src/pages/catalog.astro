@@ -1,9 +1,14 @@
 ---
+// Locale
+import nl from "@lib/copy/nl.js";
+
+// Layouts
+import AppLayout from "@layouts/AppLayout.astro";
+
+// Components
 import CatalogEditPanel from "@components/catalog/CatalogEditPanel.astro";
 import CatalogList from "@components/catalog/CatalogList.astro";
 import CatalogForm from "@components/forms/CatalogForm.astro";
-import AppLayout from "@layouts/AppLayout.astro";
-import nl from "@lib/copy/nl.js";
 ---
 
 <AppLayout title={nl.pages.catalog}>

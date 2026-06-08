@@ -1,9 +1,10 @@
 ---
+// Locale
 import nl from "@lib/copy/nl.js";
+
+// Components
 import Skeleton from "@ui/Skeleton.astro";
 import CatalogRow from "@catalog/CatalogRow.astro";
-
-const emptyLabel = `'${nl.empty.catalog}'`;
 ---
 
 <div>
@@ -26,7 +27,7 @@ const emptyLabel = `'${nl.empty.catalog}'`;
       x-show="catalogRows.length === 0"
       x-cloak
       class="mt-4 py-8 text-center text-sm text-slate-500"
-      x-text={emptyLabel}
+      x-text={nl.empty.catalog}
     >
     </p>
   </div>

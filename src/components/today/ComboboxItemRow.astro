@@ -1,5 +1,11 @@
 ---
-const { name } = Astro.props;
+// Interface
+interface Props {
+  name: string;
+}
+
+// Props
+const { name }: Props = Astro.props;
 ---
 
 <span class="block truncate text-sm text-slate-100" x-text={name}></span>

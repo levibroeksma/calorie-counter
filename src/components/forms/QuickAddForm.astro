@@ -1,9 +1,13 @@
 ---
+// Locale
+import nl from "@lib/copy/nl.js";
+
+// Components
 import Button from "@ui/Button.astro";
 import Input from "@ui/Input.astro";
-import nl from "@lib/copy/nl.js";
 import UnitDropdown from "@ui/UnitDropdown.astro";
 
+// Data
 const inputFields = [
   {
     label: `'${nl.macros.calories}'`,
@@ -66,7 +70,7 @@ const unitDropdown = {
   class="min-h-0 flex-1 space-y-3 overflow-y-auto overscroll-contain pr-2"
   @submit.prevent="$store.appStore.submitQuickAdd()"
 >
-  <Input label={`'${nl.forms.name}'`} model="$store.modalStore.form.name" />
+  <Input label={nl.forms.name} model="$store.modalStore.form.name" />
   <UnitDropdown data={unitDropdown} />
   {
     inputFields.map((field) => (
@@ -80,7 +84,7 @@ const unitDropdown = {
     ))
   }
   <Button
-    text={`'${nl.buttons.save}'`}
+    text={nl.buttons.save}
     type="submit"
     :disabled="$store.appStore.isSaving"
   />

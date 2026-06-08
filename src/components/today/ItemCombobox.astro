@@ -1,10 +1,10 @@
 ---
+// Locale
 import nl from "@lib/copy/nl.js";
+
+// Components
 import Skeleton from "@ui/Skeleton.astro";
 import ComboboxItemRow from "@today/ComboboxItemRow.astro";
-
-const searchPlaceholder = `'${nl.forms.searchItem}'`;
-const emptyLabel = `'${nl.empty.combobox}'`;
 ---
 
 <div class="relative" @click.outside="$store.appStore.closeCombobox()">
@@ -20,7 +20,7 @@ const emptyLabel = `'${nl.empty.combobox}'`;
       <input
         type="text"
         class="w-full rounded-app border border-slate-700 bg-slate-900 px-3 py-2 text-slate-100"
-        :placeholder={searchPlaceholder}
+        :placeholder={`'${nl.forms.searchItem}'`}
         x-model="$store.appStore.ui.comboboxFilter"
         @focus="$store.appStore.openCombobox()"
         @input="$store.appStore.openCombobox()"
@@ -46,7 +46,7 @@ const emptyLabel = `'${nl.empty.combobox}'`;
         x-show="comboboxItems.length === 0"
         x-cloak
         class="px-3 py-2 text-sm text-slate-500"
-        x-text={emptyLabel}
+        x-text={`'${nl.empty.combobox}'`}
       >
       </li>
     </ul>

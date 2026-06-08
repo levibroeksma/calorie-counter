@@ -1,11 +1,21 @@
 ---
+// Locale
+import nl from "@lib/copy/nl.js";
+
+// Components
 import Button from "@ui/Button.astro";
 import Input from "@ui/Input.astro";
-import nl from "@lib/copy/nl.js";
 import UnitDropdown from "@ui/UnitDropdown.astro";
 
-const { submitPrevent } = Astro.props;
+// Interface
+interface Props {
+  submitPrevent: string;
+}
 
+// Props
+const { submitPrevent }: Props = Astro.props;
+
+// Data
 const inputFields = [
   {
     label: `'${nl.macros.calories}'`,
