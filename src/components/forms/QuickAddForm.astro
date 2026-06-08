@@ -1,6 +1,5 @@
 ---
 import Button from "@ui/Button.astro";
-import Dropdown from "@ui/Dropdown.astro";
 import Input from "@ui/Input.astro";
 import nl from "@lib/copy/nl.js";
 import UnitDropdown from "@ui/UnitDropdown.astro";
@@ -70,26 +69,15 @@ const unitDropdown = {
   <Input label={`'${nl.forms.name}'`} model="$store.modalStore.form.name" />
   <UnitDropdown data={unitDropdown} />
   {
-    inputFields.map((field) => {
-      if (field.htmlType === "select") {
-        return (
-          <Dropdown
-            label={field.label}
-            model={field.model}
-            options={field.options ?? []}
-          />
-        );
-      }
-      return (
-        <Input
-          label={field.label}
-          model={field.model}
-          htmlType={field.htmlType as "number" | "select" | "text"}
-          min={field.min}
-          step={field.step}
-        />
-      );
-    })
+    inputFields.map((field) => (
+      <Input
+        label={field.label}
+        model={field.model}
+        htmlType={field.htmlType as "number" | "text"}
+        min={field.min}
+        step={field.step}
+      />
+    ))
   }
   <Button
     text={`'${nl.buttons.save}'`}
