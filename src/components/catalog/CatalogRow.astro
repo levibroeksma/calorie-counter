@@ -19,7 +19,7 @@ const { line, editClick }: Props = Astro.props;
     type="button"
     class="shrink-0 text-sm text-accent hover:underline"
     @click={editClick}
-    x-text={nl.buttons.edit}
+    x-text={`'${nl.buttons.edit}'`}
   >
   </button>
 </li>
