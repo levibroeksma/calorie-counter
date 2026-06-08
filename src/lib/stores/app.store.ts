@@ -311,12 +311,13 @@ export default function appStore(): AppStore {
     async submitQuickAdd(): Promise<CreateItemPayload | null> {
       const form = this._modalStore?.form;
 
-      if (!form || !isCatalogFormData(form)) {
+      if (!form || !isCatalogFormData(form)) return null;
+
+      const amount = Number(form.referenceAmount);
+      if (!Number.isInteger(amount) || amount < 1) {
+        this.showToast(nl.toasts.saveFailed, "error");
         return null;
       }
-
-      const amount = form.referenceAmount;
-      if (typeof amount !== "number") return null;
 
       const data = await this.createItem(
         {
