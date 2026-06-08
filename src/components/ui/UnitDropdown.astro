@@ -1,6 +1,8 @@
 ---
+// Icons
 import ChevronDown from "@icons/ChevronDown.astro";
 
+// Interface
 interface Props {
   data: {
     unitObject: {
@@ -19,10 +21,10 @@ interface Props {
   };
 }
 
-const { data } = Astro.props;
+// Props
+const { data }: Props = Astro.props;
 
-const amountMin = data.unitObject.min ?? "1";
-const amountStep = data.unitObject.step ?? "1";
+// Data
 const dropdownDisabled = data.dropdownOptions.disabled;
 ---
 
@@ -37,8 +39,8 @@ const dropdownDisabled = data.dropdownOptions.disabled;
     class="w-full rounded-l-app border border-slate-700 bg-slate-900 px-3 py-2 text-slate-100"
     type="number"
     x-model={data.unitObject.model}
-    min={amountMin}
-    step={amountStep}
+    min={data.unitObject.min ?? "1"}
+    step={data.unitObject.step ?? "1"}
     required={data.unitObject.required || undefined}
   />
 

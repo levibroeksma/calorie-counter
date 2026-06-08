@@ -1,11 +1,14 @@
 ---
+// Interface
 interface Props {
   title?: string;
 }
 
-import "../styles/global.css";
+// Styles
+import "@styles/global.css";
 
-const { title = "Calorie Tracker" } = Astro.props;
+// Props
+const { title = "Calorie Tracker" }: Props = Astro.props;
 ---
 
 <!doctype html>

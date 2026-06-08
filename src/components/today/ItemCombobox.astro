@@ -1,10 +1,10 @@
 ---
-import nl from "../../lib/copy/nl.js";
-import Skeleton from "@ui/Skeleton.astro";
-import ComboboxItemRow from "./ComboboxItemRow.astro";
+// Locale
+import nl from "@lib/copy/nl.js";
 
-const searchPlaceholder = `'${nl.forms.searchItem}'`;
-const emptyLabel = `'${nl.empty.combobox}'`;
+// Components
+import Skeleton from "@ui/Skeleton.astro";
+import ComboboxItemRow from "@today/ComboboxItemRow.astro";
 ---
 
 <div class="relative" @click.outside="$store.appStore.closeCombobox()">
@@ -14,11 +14,13 @@ const emptyLabel = `'${nl.empty.combobox}'`;
   </div>
   <div x-show="$store.appStore.hydrated" x-cloak>
     <label class="block">
-      <span class="mb-1 block text-sm text-slate-300">{nl.forms.searchItem}</span>
+      <span class="mb-1 block text-sm text-slate-300"
+        >{nl.forms.searchItem}</span
+      >
       <input
         type="text"
         class="w-full rounded-app border border-slate-700 bg-slate-900 px-3 py-2 text-slate-100"
-        :placeholder={searchPlaceholder}
+        :placeholder={`'${nl.forms.searchItem}'`}
         x-model="$store.appStore.ui.comboboxFilter"
         @focus="$store.appStore.openCombobox()"
         @input="$store.appStore.openCombobox()"
@@ -44,7 +46,7 @@ const emptyLabel = `'${nl.empty.combobox}'`;
         x-show="comboboxItems.length === 0"
         x-cloak
         class="px-3 py-2 text-sm text-slate-500"
-        x-text={emptyLabel}
+        x-text={`'${nl.empty.combobox}'`}
       >
       </li>
     </ul>

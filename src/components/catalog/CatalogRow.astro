@@ -1,8 +1,14 @@
 ---
-import nl from "../../lib/copy/nl.js";
+// Locale
+import nl from "@lib/copy/nl.js";
 
-const { line, editClick } = Astro.props;
-const editLabel = `'${nl.buttons.edit}'`;
+interface Props {
+  line: string;
+  editClick: string;
+}
+
+// Props
+const { line, editClick }: Props = Astro.props;
 ---
 
 <li
@@ -13,7 +19,7 @@ const editLabel = `'${nl.buttons.edit}'`;
     type="button"
     class="shrink-0 text-sm text-accent hover:underline"
     @click={editClick}
-    x-text={editLabel}
+    x-text={nl.buttons.edit}
   >
   </button>
 </li>

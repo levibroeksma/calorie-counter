@@ -1,7 +1,12 @@
 ---
-import LoginForm from "../components/auth/LoginForm.astro";
-import LoginLayout from "../layouts/LoginLayout.astro";
-import nl from "../lib/copy/nl.js";
+// Locale
+import nl from "@lib/copy/nl.js";
+
+// Layouts
+import LoginLayout from "@layouts/LoginLayout.astro";
+
+// Components
+import LoginForm from "@components/auth/LoginForm.astro";
 ---
 
 <LoginLayout title={nl.pages.login}>
@@ -15,7 +20,7 @@ import nl from "../lib/copy/nl.js";
     <LoginForm />
   </main>
   <script>
-    import { isLoggedIn } from "../lib/auth/session.client.js";
+    import { isLoggedIn } from "@lib/auth/session.client.js";
 
     if (isLoggedIn()) {
       window.location.replace("/");

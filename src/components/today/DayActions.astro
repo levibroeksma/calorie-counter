@@ -1,18 +1,25 @@
 ---
-import Button from "../ui/Button.astro";
-import nl from "../../lib/copy/nl.js";
+// Locale
+import nl from "@lib/copy/nl.js";
 
-const addLabel = `'${nl.buttons.add}'`;
-const quickAddLabel = `'${nl.buttons.quickAddItem}'`;
-const todayLogLabel = `'${nl.buttons.todayLog}'`;
+// Components
+import Button from "@ui/Button.astro";
 ---
 
 <div class="mt-4 flex flex-col gap-2">
   <Button
-    text={addLabel}
+    text={`'${nl.buttons.add}'`}
     click="$store.appStore.addConsumptionEntry()"
     :disabled="!canAddConsumption"
   />
-  <Button text={quickAddLabel} variant="ghost" click="openQuickAdd()" />
-  <Button text={todayLogLabel} variant="ghost" click="openTodayLog()" />
+  <Button
+    text={`'${nl.buttons.quickAddItem}'`}
+    variant="ghost"
+    click="openQuickAdd()"
+  />
+  <Button
+    text={`'${nl.buttons.todayLog}'`}
+    variant="ghost"
+    click="openTodayLog()"
+  />
 </div>

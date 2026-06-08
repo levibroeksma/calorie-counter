@@ -1,11 +1,20 @@
 ---
+// Layouts
 import BaseLayout from "@layouts/BaseLayout.astro";
+
+// Components
 import BottomNav from "@ui/BottomNav.astro";
 import ConfirmDialog from "@ui/ConfirmDialog.astro";
 import Modal from "@ui/Modal.astro";
 import Toast from "@ui/Toast.astro";
 
-const { title } = Astro.props;
+// Interface
+interface Props {
+  title?: string;
+}
+
+// Props
+const { title }: Props = Astro.props;
 ---
 
 <BaseLayout title={title}>
@@ -21,7 +30,7 @@ const { title } = Astro.props;
     <slot name="modal" />
   </Modal>
   <script>
-    import { isLoggedIn } from "../lib/auth/session.client.js";
+    import { isLoggedIn } from "@lib/auth/session.client.js";
 
     if (!isLoggedIn()) {
       window.location.replace("/login");

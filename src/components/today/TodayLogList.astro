@@ -1,9 +1,10 @@
 ---
-import nl from "../../lib/copy/nl.js";
-import Skeleton from "@ui/Skeleton.astro";
-import TodayLogRow from "./TodayLogRow.astro";
+// Locale
+import nl from "@lib/copy/nl.js";
 
-const emptyLabel = `'${nl.empty.todayLog}'`;
+// Components
+import Skeleton from "@ui/Skeleton.astro";
+import TodayLogRow from "@today/TodayLogRow.astro";
 ---
 
 <div class="flex h-full min-h-0 flex-col overflow-hidden">
@@ -42,7 +43,7 @@ const emptyLabel = `'${nl.empty.todayLog}'`;
       x-show="todayLogRows.length === 0"
       x-cloak
       class="py-4 text-center text-sm text-slate-500"
-      x-text={emptyLabel}
+      x-text={`'${nl.empty.todayLog}'`}
     >
     </p>
   </div>

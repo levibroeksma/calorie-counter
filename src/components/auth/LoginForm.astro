@@ -1,17 +1,17 @@
 ---
-import Button from "../ui/Button.astro";
-import Input from "../ui/Input.astro";
-import nl from "../../lib/copy/nl.js";
+// Locale
+import nl from "@lib/copy/nl.js";
 
-const passwordLabel = `'${nl.auth.password}'`;
-const loginLabel = `'${nl.buttons.login}'`;
+// Components
+import Button from "@ui/Button.astro";
+import Input from "@ui/Input.astro";
 ---
 
 <form class="space-y-4 w-full" @submit.prevent="submit">
-  <Input label={passwordLabel} model="password" type="'password'" />
+  <Input label={nl.auth.password} model="password" type="'password'" />
   <p class="text-sm text-danger" x-show="error" x-cloak x-text="error"></p>
   <Button
-    text={loginLabel}
+    text={nl.buttons.login}
     click="submit"
     type="submit"
     :disabled="isSubmitting"

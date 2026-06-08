@@ -1,0 +1,64 @@
+{
+  "folders": [
+    {
+      "name": "frontend",
+      "path": "./",
+    },
+  ],
+  "settings": {
+    "files.exclude": {
+      "frontend": true,
+    },
+    "files.trimFinalNewlines": true,
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+    "editor.detectIndentation": false,
+    "[astro]": {
+      "editor.defaultFormatter": "astro-build.astro-vscode",
+    },
+    "workbench.editorAssociations": {
+      "*.svg": "default",
+    },
+    "todo-tree.highlights.defaultHighlight": {
+      "icon": "alert",
+      "type": "text",
+      "foreground": "#ef4444",
+      "background": "#ffffff",
+      "opacity": 50,
+      "iconColour": "#3b82f6",
+    },
+    "todo-tree.highlights.customHighlight": {
+      "FIXME": {
+        "type": "text-and-comment",
+        "foreground": "#ef4444",
+        "background": "#ef4444",
+        "opacity": 35,
+        "iconColour": "#ef4444",
+        "gutterIcon": true,
+      },
+      "TODO": {
+        "type": "text-and-comment",
+        "foreground": "#f97316",
+        "background": "#f97316",
+        "opacity": 35,
+        "iconColour": "#f97316",
+        "gutterIcon": true,
+      },
+      "NOTE": {
+        "type": "text-and-comment",
+        "foreground": "#0ea5e9",
+        "background": "#0ea5e9",
+        "opacity": 35,
+        "iconColour": "#0ea5e9",
+        "gutterIcon": true,
+      },
+    },
+    "todo-tree.regex.regex": "(//|#|<!--|;|/\\*|^|^[ \\t]*(-|\\d+.))\\s*($TAGS)",
+    "todo-tree.regex.regexCaseSensitive": false,
+  },
+}

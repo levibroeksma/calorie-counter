@@ -1,12 +1,18 @@
 ---
-const { class: className, ...props } = Astro.props;
+// Interface
+interface Props {
+  class: string;
+}
+
+// Props
+const { class: className, ...props }: Props = Astro.props;
 ---
 
 <svg
-  class={className}
   viewBox="0 0 20 20"
   fill="currentColor"
   aria-hidden="true"
+  class={className}
   {...props}
 >
   <path

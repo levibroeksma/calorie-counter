@@ -1,11 +1,13 @@
 ---
+// Interface
 interface Props {
   label: string;
   model: string;
   options: Array<{ label: string; value: string }>;
 }
 
-const { label, model, options } = Astro.props;
+// Props
+const { label, model, options }: Props = Astro.props;
 ---
 
 <div x-data="{ open: false }" @click.outside="open = false" class="block">

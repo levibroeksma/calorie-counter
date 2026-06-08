@@ -1,12 +1,14 @@
 ---
-import CatalogEditPanel from "../components/catalog/CatalogEditPanel.astro";
-import CatalogList from "../components/catalog/CatalogList.astro";
-import CatalogForm from "../components/forms/CatalogForm.astro";
-import AppLayout from "../layouts/AppLayout.astro";
-import nl from "../lib/copy/nl.js";
+// Locale
+import nl from "@lib/copy/nl.js";
 
-const addItemLabel = `'${nl.buttons.addCatalogItem}'`;
-const searchPlaceholder = `'${nl.forms.searchItem}'`;
+// Layouts
+import AppLayout from "@layouts/AppLayout.astro";
+
+// Components
+import CatalogEditPanel from "@components/catalog/CatalogEditPanel.astro";
+import CatalogList from "@components/catalog/CatalogList.astro";
+import CatalogForm from "@components/forms/CatalogForm.astro";
 ---
 
 <AppLayout title={nl.pages.catalog}>
@@ -22,13 +24,13 @@ const searchPlaceholder = `'${nl.forms.searchItem}'`;
       </button>
     </div>
     <label class="block">
-      <span class="mb-1 block text-sm text-slate-300"
-        >{nl.forms.searchItem}</span
-      >
+      <span class="mb-1 block text-sm text-slate-300">
+        {nl.forms.searchItem}
+      </span>
       <input
         type="search"
         class="w-full rounded-app border border-slate-700 bg-slate-900 px-3 py-2 text-slate-100"
-        :placeholder={searchPlaceholder}
+        :placeholder={nl.forms.searchItem}
         x-model="search"
       />
     </label>

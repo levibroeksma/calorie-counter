@@ -7,6 +7,7 @@
     "paths": {
       "@/*": ["./*"],
       "@components/*": ["./src/components/*"],
+      "@data/*": ["./src/data/*"],
       "@actions/*": ["./src/actions/*"],
       "@auth/*": ["./src/components/auth/*"],
       "@catalog/*": ["./src/components/catalog/*"],
@@ -16,9 +17,11 @@
       "@ui/*": ["./src/components/ui/*"],
       "@layouts/*": ["./src/layouts/*"],
       "@lib/*": ["./src/lib/*"],
+      "@stores/*": ["./src/lib/stores/*"],
       "@pages/*": ["./src/pages/*"],
       "@styles/*": ["./src/styles/*"],
       "@icons/*": ["./src/icons/*"],
+      "@config/*": ["./src/lib/config/*"]
     }
   }
 }
