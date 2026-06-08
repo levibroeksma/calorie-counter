@@ -11,7 +11,7 @@ import Input from "@ui/Input.astro";
   <Input label={nl.auth.password} model="password" type="'password'" />
   <p class="text-sm text-danger" x-show="error" x-cloak x-text="error"></p>
   <Button
-    text={nl.buttons.login}
+    text={`'${nl.buttons.login}'`}
     click="submit"
     type="submit"
     :disabled="isSubmitting"
