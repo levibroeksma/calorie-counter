@@ -1,15 +1,15 @@
-import { z } from 'astro/zod';
+import { z } from "astro/zod";
 
-export const referenceUnitSchema = z.enum(['g', 'ml']);
+export const referenceUnitSchema = z.enum(["g", "ml"]);
 
 const nonNegativeNumber = z.coerce.number().min(0);
 
 export const macrosSchema = z.object({
   calories: nonNegativeNumber,
   protein: nonNegativeNumber,
-  fibres: nonNegativeNumber.optional(),
-  fats: nonNegativeNumber.optional(),
-  carbs: nonNegativeNumber.optional(),
+  fibres: nonNegativeNumber.default(0),
+  fats: nonNegativeNumber.default(0),
+  carbs: nonNegativeNumber.default(0),
 });
 
 export const foodItemFieldsSchema = z.object({
@@ -46,17 +46,17 @@ export const createItemInputSchema = z
 
     if (value.amount == null) {
       context.addIssue({
-        code: 'custom',
-        message: 'required',
-        path: ['amount'],
+        code: "custom",
+        message: "required",
+        path: ["amount"],
       });
     }
 
     if (value.unit == null) {
       context.addIssue({
-        code: 'custom',
-        message: 'required',
-        path: ['unit'],
+        code: "custom",
+        message: "required",
+        path: ["unit"],
       });
     }
   });

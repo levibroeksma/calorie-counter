@@ -1,10 +1,11 @@
-import { defineAction, ActionError } from 'astro:actions';
-import { z } from 'astro/zod';
-import { requireWriteTokenFromInput } from '../lib/auth/requireWriteToken.server.js';
-import { getTodayLocal } from '../lib/data/date.service.js';
-import { getRepository } from '../lib/data/getRepository.js';
-import { findConsumptionDay } from '../lib/domain/consumption.service.js';
-import { writeTokenSchema } from './schemas.js';
+import { defineAction, ActionError } from "astro:actions";
+import { z } from "astro/zod";
+import { requireWriteTokenFromInput } from "@lib/auth/requireWriteToken.server.js";
+import { getTodayLocal } from "@lib/data/date.service.js";
+import { getRepository } from "@lib/data/getRepository.js";
+import { findConsumptionDay } from "@lib/domain/consumption.service.js";
+import { writeTokenSchema } from "@actions/schemas.js";
+import type { RemoveConsumptionPayload } from "@lib/domain/types.js";
 
 export const removeConsumption = defineAction({
   input: writeTokenSchema.extend({
@@ -20,15 +21,15 @@ export const removeConsumption = defineAction({
 
     if (!day) {
       throw new ActionError({
-        code: 'NOT_FOUND',
-        message: 'today_not_found',
+        code: "NOT_FOUND",
+        message: "today_not_found",
       });
     }
 
     if (input.index < 0 || input.index >= day.consumed.length) {
       throw new ActionError({
-        code: 'BAD_REQUEST',
-        message: 'invalid_index',
+        code: "BAD_REQUEST",
+        message: "invalid_index",
       });
     }
 
@@ -39,6 +40,6 @@ export const removeConsumption = defineAction({
       today,
       consumption,
       removedIndex: input.index,
-    };
+    } as RemoveConsumptionPayload;
   },
 });

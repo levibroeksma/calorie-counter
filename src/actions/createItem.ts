@@ -1,12 +1,16 @@
-import { defineAction } from 'astro:actions';
-import { requireWriteTokenFromInput } from '../lib/auth/requireWriteToken.server.js';
-import { getRepository } from '../lib/data/getRepository.js';
-import { findConsumptionDay } from '../lib/domain/consumption.service.js';
-import { validateNewFoodItem } from '../lib/domain/foodItem.service.js';
-import { validatePortion } from '../lib/domain/portion.service.js';
-import { assertValidPortion, throwValidationErrors } from './actionHelpers.server.js';
-import { ensureTodayInMemory } from '../lib/data/appData.server.js';
-import { createItemInputSchema } from './schemas.js';
+import { ActionError, defineAction } from "astro:actions";
+import { requireWriteTokenFromInput } from "@lib/auth/requireWriteToken.server.js";
+import { getRepository } from "@lib/data/getRepository.js";
+import { findConsumptionDay } from "@lib/domain/consumption.service.js";
+import { validateNewFoodItem } from "@lib/domain/foodItem.service.js";
+import { validatePortion } from "@lib/domain/portion.service.js";
+import {
+  assertValidPortion,
+  throwValidationErrors,
+} from "@actions/actionHelpers.server.js";
+import { ensureTodayInMemory } from "@lib/data/appData.server.js";
+import { createItemInputSchema } from "@actions/schemas.js";
+import type { CreateItemPayload, ReferenceUnit } from "@lib/domain/types.js";
 
 export const createItem = defineAction({
   input: createItemInputSchema,
@@ -37,9 +41,14 @@ export const createItem = defineAction({
     let logged = false;
 
     if (input.logToToday) {
-      assertValidPortion(
-        validatePortion(item, input.amount, input.unit),
-      );
+      const { amount, unit } = input;
+      if (!amount || !unit) {
+        throw new ActionError({
+          code: "BAD_REQUEST",
+          message: "required",
+        });
+      }
+      assertValidPortion(validatePortion(item, amount, unit));
 
       const ensured = ensureTodayInMemory(consumption);
       consumption = ensured.consumption;
@@ -48,8 +57,8 @@ export const createItem = defineAction({
       if (day) {
         day.consumed.push({
           itemId: item.id,
-          amount: /** @type {number} */ (input.amount),
-          unit: /** @type {string} */ (input.unit),
+          amount: amount as number,
+          unit: unit as ReferenceUnit,
         });
       }
 
@@ -62,6 +71,6 @@ export const createItem = defineAction({
       items: nextItems,
       consumption,
       logged,
-    };
+    } as CreateItemPayload;
   },
 });

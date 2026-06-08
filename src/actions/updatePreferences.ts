@@ -1,9 +1,10 @@
-import { defineAction } from 'astro:actions';
-import { requireWriteTokenFromInput } from '../lib/auth/requireWriteToken.server.js';
-import { getRepository } from '../lib/data/getRepository.js';
-import { validatePreferences } from '../lib/domain/userPreference.service.js';
-import { throwValidationErrors } from './actionHelpers.server.js';
-import { updatePreferencesInputSchema } from './schemas.js';
+import { defineAction } from "astro:actions";
+import { requireWriteTokenFromInput } from "@lib/auth/requireWriteToken.server.js";
+import { getRepository } from "@lib/data/getRepository.js";
+import { validatePreferences } from "@lib/domain/userPreference.service.js";
+import { throwValidationErrors } from "@actions/actionHelpers.server.js";
+import { updatePreferencesInputSchema } from "@actions/schemas.js";
+import type { UpdatePreferencesPayload } from "@lib/domain/types.js";
 
 export const updatePreferences = defineAction({
   input: updatePreferencesInputSchema,
@@ -27,6 +28,6 @@ export const updatePreferences = defineAction({
 
     return {
       preferences: validation.preferences,
-    };
+    } as UpdatePreferencesPayload;
   },
 });
