@@ -1,27 +1,31 @@
 import { getStore } from "@netlify/blobs";
+
 import { shouldUseSeedData } from "@config/environments.js";
 import { assertDataRepository } from "@lib/data/repository.contract.js";
+
 import {
   getEmptyConsumption,
   getEmptyItems,
   getEmptyPreferences,
 } from "@lib/data/emptyRepositoryDefaults.js";
-import { BLOB_STORE_KEYS } from "@lib/data/repository.types.js";
+
 import {
   loadSeedConsumption,
   loadSeedItems,
   loadSeedPreferences,
 } from "@lib/data/seedLoader.js";
+
+import { BLOB_STORE_KEYS } from "@lib/data/index.js";
+
+import type { ConsumptionDay, FoodItem, Preferences } from "@lib/domain/index";
+
 import type {
-  Cloneable,
-  ConsumptionDay,
-  DataRepository,
-  FoodItem,
-  Preferences,
+  BlobStoreKey,
   BlobStoreLike,
+  Cloneable,
+  DataRepository,
   BlobWriteResult,
-} from "@lib/domain/types.js";
-import type { BlobStoreKey } from "@lib/data/repository.types.js";
+} from "@lib/data/index";
 
 /** Site-wide Netlify Blobs store for persisted JSON blobs. */
 export const BLOB_SITE_STORE_NAME = "calory-tracker" as const;

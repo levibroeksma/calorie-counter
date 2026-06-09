@@ -1,4 +1,4 @@
-import type { ConsumptionDay, FoodItem, Preferences } from "@lib/domain/types";
+import type { ConsumptionDay, FoodItem, Preferences } from "@lib/domain/index";
 
 /** Production-safe empty store values (no demo items). */
 export function getEmptyItems(): FoodItem[] {

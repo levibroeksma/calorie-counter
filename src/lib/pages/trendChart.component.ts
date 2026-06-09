@@ -7,11 +7,14 @@ import {
   loadChartLibrary,
   resetChartLibraryCache,
   updateTrendChart,
-} from "@lib/charts/trendChart.client.js";
+} from "@lib/charts/trendChart.client";
 
-import { buildTrendSeries } from "@lib/domain/trend.service.js";
-import type { AppStore, TrendSeriesPoint } from "@lib/domain/types.js";
+import { buildTrendSeries } from "@lib/domain/trend.service";
 
+import type { AppStore } from "@lib/stores/index";
+import type { TrendSeriesPoint } from "@lib/domain/index";
+
+/** Trend chart component data */
 interface TrendChartComponentData {
   init(): void;
   chartRevision: string;
@@ -21,10 +24,12 @@ interface TrendChartComponentData {
   destroy(): void;
 }
 
+/** Creates a trend chart component */
 export default function trendChart(): Alpine.AlpineComponent<TrendChartComponentData> {
   let chart: Chart | null = null;
   let ChartLib: typeof Chart | null = null;
   return {
+    /** Initializes the trend chart component */
     init(): void {
       this.$nextTick(() => {
         this.ensureChart();
@@ -35,6 +40,7 @@ export default function trendChart(): Alpine.AlpineComponent<TrendChartComponent
       });
     },
 
+    /** Gets the chart revision */
     get chartRevision(): string {
       const appStore = this.$store.appStore as AppStore;
       return [
@@ -46,6 +52,7 @@ export default function trendChart(): Alpine.AlpineComponent<TrendChartComponent
       ].join("|");
     },
 
+    /** Gets the series */
     get series(): TrendSeriesPoint[] {
       const appStore = this.$store.appStore as AppStore;
       return buildTrendSeries({
@@ -56,6 +63,7 @@ export default function trendChart(): Alpine.AlpineComponent<TrendChartComponent
       });
     },
 
+    /** Ensures the chart */
     async ensureChart(): Promise<void> {
       const canvas = this.$refs.chartCanvas;
       if (!(canvas instanceof HTMLCanvasElement)) {
@@ -86,6 +94,7 @@ export default function trendChart(): Alpine.AlpineComponent<TrendChartComponent
       }
     },
 
+    /** Refreshes the chart */
     refreshChart(): void {
       if (!chart) {
         void this.ensureChart();
@@ -98,6 +107,7 @@ export default function trendChart(): Alpine.AlpineComponent<TrendChartComponent
       updateTrendChart(chart, config);
     },
 
+    /** Destroys the chart */
     destroy(): void {
       chart?.destroy();
       chart = null;

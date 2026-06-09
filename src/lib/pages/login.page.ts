@@ -1,9 +1,13 @@
 import { actions, isActionError } from "astro:actions";
-import { isLoggedIn, setSession } from "@lib/auth/session.client.js";
-import nl from "@lib/copy/nl.js";
-import { messageForActionError } from "@stores/actionMessages.js";
+import type Alpine from "alpinejs";
 
-interface LoginPage {
+import nl from "@lib/copy/nl";
+
+import { isLoggedIn, setSession } from "@lib/auth/session.client";
+import { messageForActionError } from "@stores/actionMessages";
+
+/** Login page data */
+interface LoginPageData {
   password: string;
   error: string;
   isSubmitting: boolean;
@@ -11,18 +15,21 @@ interface LoginPage {
   submit(): Promise<void>;
 }
 
-export default function loginPage(): LoginPage {
+/** Creates a login page component */
+export default function loginPage(): Alpine.AlpineComponent<LoginPageData> {
   return {
     password: "",
     error: "",
     isSubmitting: false,
 
+    /** Initializes the login page */
     init() {
       if (isLoggedIn()) {
         window.location.replace("/");
       }
     },
 
+    /** Submits the login form */
     async submit() {
       this.error = "";
 

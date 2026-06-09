@@ -1,10 +1,15 @@
 import { defineAction } from "astro:actions";
-import { requireWriteTokenFromInput } from "@lib/auth/requireWriteToken.server.js";
-import { getRepository } from "@lib/data/getRepository.js";
-import { validateFoodItemUpdate } from "@lib/domain/foodItem.service.js";
-import { throwValidationErrors } from "@actions/actionHelpers.server.js";
-import { updateItemInputSchema } from "@actions/schemas.js";
-import type { UpdateItemPayload } from "@lib/domain/types.js";
+
+import { getRepository } from "@lib/data/getRepository";
+
+import { validateFoodItemUpdate } from "@lib/domain/foodItem.service";
+
+import { requireWriteTokenFromInput } from "@lib/auth/requireWriteToken.server";
+import { throwValidationErrors } from "@actions/actionHelpers.server";
+
+import { updateItemInputSchema } from "@actions/schemas";
+
+import type { UpdateItemPayload } from "@actions/payloads";
 
 export const updateItem = defineAction({
   input: updateItemInputSchema,

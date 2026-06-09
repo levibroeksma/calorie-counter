@@ -1,11 +1,16 @@
 import { defineAction, ActionError } from "astro:actions";
 import { z } from "astro/zod";
-import { requireWriteTokenFromInput } from "@lib/auth/requireWriteToken.server.js";
-import { getTodayLocal } from "@lib/data/date.service.js";
-import { getRepository } from "@lib/data/getRepository.js";
-import { findConsumptionDay } from "@lib/domain/consumption.service.js";
-import { writeTokenSchema } from "@actions/schemas.js";
-import type { RemoveConsumptionPayload } from "@lib/domain/types.js";
+
+import { getRepository } from "@lib/data/getRepository";
+
+import { requireWriteTokenFromInput } from "@lib/auth/requireWriteToken.server";
+
+import { getTodayLocal } from "@lib/data/date.service";
+import { findConsumptionDay } from "@lib/domain/consumption.service";
+
+import { writeTokenSchema } from "@actions/schemas";
+
+import type { RemoveConsumptionPayload } from "@actions/payloads";
 
 export const removeConsumption = defineAction({
   input: writeTokenSchema.extend({

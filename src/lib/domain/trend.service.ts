@@ -1,19 +1,21 @@
-import { getRollingDateWindow, getTodayLocal } from "@lib/data/date.service.js";
-import { sumMacrosForDate } from "@lib/domain/consumption.service.js";
+import { getRollingDateWindow, getTodayLocal } from "@lib/data/date.service";
+import { sumMacrosForDate } from "@lib/domain/consumption.service";
 import type {
-  MacroTotals,
+  TrendSeriesInput,
+  TrendSeriesPoint,
   ConsumptionDay,
   LocalDate,
   FoodItem,
-  TrendSeriesPoint,
-  TrendSeriesInput,
-} from "@lib/domain/types.js";
+  MacroTotals,
+} from "@lib/domain/index";
 
+/** Trend period days */
 export const TREND_PERIOD_DAYS = {
   WEEK: 7,
   MONTH: 30,
 } as const;
 
+/** Gets the daily macro totals */
 export function getDailyMacroTotals(
   items: FoodItem[],
   consumption: ConsumptionDay[],
@@ -22,6 +24,7 @@ export function getDailyMacroTotals(
   return sumMacrosForDate(items, consumption, date) as MacroTotals;
 }
 
+/** Builds a trend series */
 export function buildTrendSeries({
   items,
   consumption,
@@ -36,6 +39,7 @@ export function buildTrendSeries({
   })) as TrendSeriesPoint[];
 }
 
+/** Builds a week trend series */
 export function buildWeekTrendSeries(
   items: FoodItem[],
   consumption: ConsumptionDay[],
@@ -49,6 +53,7 @@ export function buildWeekTrendSeries(
   }) as TrendSeriesPoint[];
 }
 
+/** Builds a month trend series */
 export function buildMonthTrendSeries(
   items: FoodItem[],
   consumption: ConsumptionDay[],

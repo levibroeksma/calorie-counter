@@ -1,3 +1,13 @@
+import type {
+  PortionValidationResult,
+  ConsumptionEntry,
+  FoodItem,
+  ReferenceUnit,
+  Macro,
+  ScaleMacrosResult,
+} from "@lib/domain/index";
+
+/** Macro fields */
 export const MACRO_FIELDS = [
   "calories",
   "protein",
@@ -6,15 +16,7 @@ export const MACRO_FIELDS = [
   "carbs",
 ] as const;
 
-import type {
-  ConsumptionEntry,
-  FoodItem,
-  Macro,
-  PortionValidationResult,
-  ReferenceUnit,
-  ScaleMacrosResult,
-} from "@lib/domain/types";
-
+/** Rounds a value for display */
 export function roundForDisplay(value: number): number {
   if (!Number.isFinite(value)) {
     return 0;
@@ -22,6 +24,7 @@ export function roundForDisplay(value: number): number {
   return Math.round(value * 10) / 10;
 }
 
+/** Rounds macros for display */
 export function roundMacrosForDisplay(macros: Macro): Macro {
   const rounded = {
     calories: roundForDisplay(macros.calories ?? 0),
@@ -38,6 +41,7 @@ export function roundMacrosForDisplay(macros: Macro): Macro {
   return rounded;
 }
 
+/** Validates a portion */
 export function validatePortion(
   item: FoodItem,
   amount: number,
@@ -72,6 +76,7 @@ export function validatePortion(
   return { valid: true, scale: amount / referenceAmount };
 }
 
+/** Gets the scale for a portion */
 export function getScale(
   item: FoodItem,
   amount: number,
@@ -81,10 +86,12 @@ export function getScale(
   return validation.valid ? validation.scale : null;
 }
 
+/** Scales a macro value */
 export function scaleMacroValue(macroValue: number, scale: number): number {
   return (macroValue ?? 0) * scale;
 }
 
+/** Scales macros */
 export function scaleMacros(
   item: FoodItem,
   amount: number,
@@ -109,6 +116,7 @@ export function scaleMacros(
   return { valid: true, scale: validation.scale, macros: macros };
 }
 
+/** Scales a consumption entry */
 export function scaleConsumptionEntry(
   item: FoodItem,
   entry: ConsumptionEntry,

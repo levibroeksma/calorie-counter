@@ -1,7 +1,9 @@
-import type { MacroKeys, MacroTotals, Preferences } from "@lib/domain/types.js";
-import { MACRO_FIELDS, roundForDisplay } from "@lib/domain/portion.service.js";
-import { preferencesToMacroTargets } from "@lib/domain/userPreference.service.js";
+import type { MacroKeys, MacroTotals, Preferences } from "@lib/domain/index";
 
+import { MACRO_FIELDS, roundForDisplay } from "@lib/domain/portion.service";
+import { preferencesToMacroTargets } from "@lib/domain/userPreference.service";
+
+/** Macro bar row */
 export type MacroBarRow = {
   key: MacroKeys;
   achieved: number;
@@ -10,6 +12,7 @@ export type MacroBarRow = {
   fillClass: string;
 };
 
+/** Gets the fill class for a macro bar */
 export function macroBarFillClass(
   field: MacroKeys,
   achieved: number,
@@ -34,6 +37,7 @@ export function macroBarFillClass(
   return "bg-slate-500";
 }
 
+/** Builds the macro bar rows */
 export function buildMacroBarRows(
   achieved: MacroTotals,
   preferences: Preferences,

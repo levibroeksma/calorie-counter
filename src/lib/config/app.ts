@@ -1,4 +1,4 @@
-import type { AppConfig } from "@lib/domain/types";
+import type { AppConfig } from "@lib/config/index";
 
 /** Application metadata (injected into Alpine `app` / `config` stores). */
 export const appConfig: AppConfig = {

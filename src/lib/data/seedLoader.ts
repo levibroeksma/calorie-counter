@@ -1,9 +1,11 @@
-import { shouldUseSeedData } from "@config/environments.js";
+import { shouldUseSeedData } from "@config/environments";
+
 import itemsSeed from "@data/seed/items.json" with { type: "json" };
 import consumptionSeed from "@data/seed/consumption.json" with { type: "json" };
 import preferencesSeed from "@data/seed/preferences.json" with { type: "json" };
-import type { Cloneable, FoodItem, Preferences } from "@lib/domain/types.js";
-import type { ConsumptionDay } from "@lib/domain/types.js";
+
+import type { FoodItem, Preferences, ConsumptionDay } from "@lib/domain/index";
+import type { Cloneable } from "@lib/data/index";
 
 type SeedData = {
   items: FoodItem[];

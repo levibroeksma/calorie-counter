@@ -1,10 +1,11 @@
 import dayjs, { type Dayjs } from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat.js";
-import type { LocalDate } from "@lib/domain/types.js";
 dayjs.extend(customParseFormat);
 
+import type { LocalDate } from "@lib/domain/index";
+
 /** Local calendar date format (`YYYY-MM-DD`). */
-export const LOCAL_DATE_FORMAT = "YYYY-MM-DD";
+export const LOCAL_DATE_FORMAT = "YYYY-MM-DD" as const;
 
 export function parseLocalDate(dateStr: string): Dayjs {
   return dayjs(dateStr, LOCAL_DATE_FORMAT, true);

@@ -1,5 +1,14 @@
 import dayjs from "dayjs";
-import "dayjs/locale/nl.js";
+import "dayjs/locale/nl";
+dayjs.locale("nl");
+
+import nl from "@lib/copy/nl";
+
+import { preferencesToMacroTargets } from "@lib/domain/userPreference.service";
+import { MACRO_FIELDS } from "@lib/domain/portion.service";
+
+import type { Preferences, TrendSeriesPoint } from "@lib/domain/index";
+
 import type {
   Chart as ChartClass,
   ChartConfiguration,
@@ -7,13 +16,6 @@ import type {
   CoreChartOptions,
   LegendItem,
 } from "chart.js";
-
-import nl from "@lib/copy/nl.js";
-import { preferencesToMacroTargets } from "@lib/domain/userPreference.service.js";
-import { MACRO_FIELDS } from "@lib/domain/portion.service.js";
-import type { Preferences, TrendSeriesPoint } from "@lib/domain/types.js";
-
-dayjs.locale("nl");
 
 const MACRO_COLORS = {
   calories: "rgb(16, 185, 129)",
