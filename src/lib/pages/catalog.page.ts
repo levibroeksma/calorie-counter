@@ -7,7 +7,7 @@ import { roundForDisplay } from "@lib/domain/portion.service";
 import type { FoodItem } from "@lib/domain/index";
 import type { AppStore } from "@lib/stores/index";
 import type { UpdateItemPayload } from "@actions/payloads";
-import type { ModalStore } from "@lib/stores/types/modal";
+import type { ModalStore } from "@lib/stores/index";
 
 /** Catalog page data */
 interface CatalogPageData {
