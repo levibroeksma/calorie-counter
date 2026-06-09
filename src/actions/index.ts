@@ -1,11 +1,11 @@
-import { addConsumption } from "@actions/addConsumption.js";
-import { createItem } from "@actions/createItem.js";
-import { ensureToday } from "@actions/ensureToday.js";
-import { loadData } from "@actions/loadData.js";
-import { login } from "@actions/login.js";
-import { removeConsumption } from "@actions/removeConsumption.js";
-import { updateItem } from "@actions/updateItem.js";
-import { updatePreferences } from "@actions/updatePreferences.js";
+import { addConsumption } from "@actions/addConsumption";
+import { createItem } from "@actions/createItem";
+import { ensureToday } from "@actions/ensureToday";
+import { loadData } from "@actions/loadData";
+import { login } from "@actions/login";
+import { removeConsumption } from "@actions/removeConsumption";
+import { updateItem } from "@actions/updateItem";
+import { updatePreferences } from "@actions/updatePreferences";
 
 export const server = {
   login,

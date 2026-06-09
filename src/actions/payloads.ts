@@ -4,7 +4,7 @@ import type {
   ConsumptionDay,
   Preferences,
   ConsumptionEntry,
-} from "@lib/domain/types/index.js";
+} from "@lib/domain/index";
 
 /** Load data payload */
 export type LoadDataPayload = {

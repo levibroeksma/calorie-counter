@@ -3,9 +3,9 @@ import { ActionError } from "astro:actions";
 import type {
   ValidationErrorRecord,
   PortionValidationResult,
-} from "@lib/domain/types/index";
+} from "@lib/domain/index";
 
-export { loadAppData, ensureTodayInMemory } from "@lib/data/appData.server.js";
+export { loadAppData, ensureTodayInMemory } from "@lib/data/appData.server";
 
 /**  Throw an ActionError when validation fails.*/
 export function throwValidationErrors(errors: ValidationErrorRecord): never {

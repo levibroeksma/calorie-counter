@@ -1,22 +1,22 @@
 import { defineAction, ActionError } from "astro:actions";
 
-import { getRepository } from "@lib/data/getRepository.js";
+import { getRepository } from "@lib/data/getRepository";
 
-import { findConsumptionDay } from "@lib/domain/consumption.service.js";
-import { validatePortion } from "@lib/domain/portion.service.js";
+import { findConsumptionDay } from "@lib/domain/consumption.service";
+import { validatePortion } from "@lib/domain/portion.service";
 
-import { requireWriteTokenFromInput } from "@lib/auth/requireWriteToken.server.js";
-import { assertValidPortion } from "@actions/actionHelpers.server.js";
-import { ensureTodayInMemory } from "@lib/data/appData.server.js";
+import { requireWriteTokenFromInput } from "@lib/auth/requireWriteToken.server";
+import { assertValidPortion } from "@actions/actionHelpers.server";
+import { ensureTodayInMemory } from "@lib/data/appData.server";
 
-import { addConsumptionInputSchema } from "@actions/schemas.js";
+import { addConsumptionInputSchema } from "@actions/schemas";
 
 import type {
   ConsumptionEntry,
   ConsumptionDay,
   FoodItem,
   LocalDate,
-} from "@lib/domain/types/index.js";
+} from "@lib/domain/index";
 
 import type { AddConsumptionPayload } from "@actions/payloads";
 

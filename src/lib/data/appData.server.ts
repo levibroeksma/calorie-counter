@@ -4,7 +4,7 @@ import { getRepository } from "@lib/data/getRepository";
 import { findConsumptionDay } from "@lib/domain/consumption.service";
 
 import type { ConsumptionDay } from "@lib/domain/index";
-import type { LocalDate } from "@lib/domain/types/index";
+import type { LocalDate } from "@lib/domain/index";
 import type { LoadDataPayload } from "@actions/payloads";
 
 export async function loadAppData(): Promise<LoadDataPayload> {

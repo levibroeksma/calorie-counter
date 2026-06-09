@@ -1,14 +1,14 @@
 import { defineAction, ActionError } from "astro:actions";
 import { z } from "astro/zod";
 
-import { getRepository } from "@lib/data/getRepository.js";
+import { getRepository } from "@lib/data/getRepository";
 
-import { requireWriteTokenFromInput } from "@lib/auth/requireWriteToken.server.js";
+import { requireWriteTokenFromInput } from "@lib/auth/requireWriteToken.server";
 
-import { getTodayLocal } from "@lib/data/date.service.js";
-import { findConsumptionDay } from "@lib/domain/consumption.service.js";
+import { getTodayLocal } from "@lib/data/date.service";
+import { findConsumptionDay } from "@lib/domain/consumption.service";
 
-import { writeTokenSchema } from "@actions/schemas.js";
+import { writeTokenSchema } from "@actions/schemas";
 
 import type { RemoveConsumptionPayload } from "@actions/payloads";
 

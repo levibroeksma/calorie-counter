@@ -1,23 +1,23 @@
 import { ActionError, defineAction } from "astro:actions";
 
-import { getRepository } from "@lib/data/getRepository.js";
+import { getRepository } from "@lib/data/getRepository";
 
-import { findConsumptionDay } from "@lib/domain/consumption.service.js";
-import { validateNewFoodItem } from "@lib/domain/foodItem.service.js";
-import { validatePortion } from "@lib/domain/portion.service.js";
+import { findConsumptionDay } from "@lib/domain/consumption.service";
+import { validateNewFoodItem } from "@lib/domain/foodItem.service";
+import { validatePortion } from "@lib/domain/portion.service";
 
 import {
   assertValidPortion,
   throwValidationErrors,
-} from "@actions/actionHelpers.server.js";
-import { requireWriteTokenFromInput } from "@lib/auth/requireWriteToken.server.js";
-import { ensureTodayInMemory } from "@lib/data/appData.server.js";
+} from "@actions/actionHelpers.server";
+import { requireWriteTokenFromInput } from "@lib/auth/requireWriteToken.server";
+import { ensureTodayInMemory } from "@lib/data/appData.server";
 
-import { createItemInputSchema } from "@actions/schemas.js";
+import { createItemInputSchema } from "@actions/schemas";
 
 import type { CreateItemPayload } from "@actions/payloads";
 
-import type { ReferenceUnit } from "@lib/domain/types/index.js";
+import type { ReferenceUnit } from "@lib/domain/index";
 
 export const createItem = defineAction({
   input: createItemInputSchema,

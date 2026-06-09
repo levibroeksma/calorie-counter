@@ -1,14 +1,15 @@
 import { defineAction } from "astro:actions";
 
-import { getRepository } from "@lib/data/getRepository.js";
+import { getRepository } from "@lib/data/getRepository";
 
-import { requireWriteTokenFromInput } from "@lib/auth/requireWriteToken.server.js";
-import { ensureTodayInMemory, loadAppData } from "@lib/data/appData.server.js";
+import { requireWriteTokenFromInput } from "@lib/auth/requireWriteToken.server";
+import { ensureTodayInMemory, loadAppData } from "@lib/data/appData.server";
 
-import { writeTokenSchema } from "@actions/schemas.js";
+import { writeTokenSchema } from "@actions/schemas";
 
 import type { EnsureTodayPayload } from "@actions/payloads";
 
+/** Ensures today */
 export const ensureToday = defineAction({
   input: writeTokenSchema,
   handler: async (input: {

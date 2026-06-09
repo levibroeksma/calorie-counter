@@ -1,13 +1,13 @@
 import { defineAction } from "astro:actions";
 
-import { getRepository } from "@lib/data/getRepository.js";
+import { getRepository } from "@lib/data/getRepository";
 
-import { validateFoodItemUpdate } from "@lib/domain/foodItem.service.js";
+import { validateFoodItemUpdate } from "@lib/domain/foodItem.service";
 
-import { requireWriteTokenFromInput } from "@lib/auth/requireWriteToken.server.js";
-import { throwValidationErrors } from "@actions/actionHelpers.server.js";
+import { requireWriteTokenFromInput } from "@lib/auth/requireWriteToken.server";
+import { throwValidationErrors } from "@actions/actionHelpers.server";
 
-import { updateItemInputSchema } from "@actions/schemas.js";
+import { updateItemInputSchema } from "@actions/schemas";
 
 import type { UpdateItemPayload } from "@actions/payloads";
 

@@ -14,7 +14,7 @@ import {
 } from "@lib/domain/portion.service";
 
 import { messageForActionError } from "@lib/stores/actionMessages";
-import { isCatalogFormData } from "@lib/stores/modal.guards.js";
+import { isCatalogFormData } from "@lib/stores/modal.guards";
 
 import type {
   AppStore,
@@ -280,7 +280,7 @@ export default function appStore(): AppStore {
       if (!item) {
         return;
       }
-
+      this.ui.comboboxFilter = item.name;
       this.ui.portionAmount = item.referenceAmount;
       this.ui.portionUnit = item.referenceUnit;
     },
