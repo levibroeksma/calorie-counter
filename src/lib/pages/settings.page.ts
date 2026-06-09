@@ -1,4 +1,5 @@
 import type Alpine from "alpinejs";
+
 import type { AppStore } from "@lib/stores/index";
 import type { Preferences } from "@lib/domain/index";
 
