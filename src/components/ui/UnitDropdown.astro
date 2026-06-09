@@ -38,7 +38,7 @@ const dropdownDisabled = data.dropdownOptions.disabled;
   <input
     class="w-full rounded-l-app border border-slate-700 bg-slate-900 px-3 py-2 text-slate-100"
     type="number"
-    x-model={data.unitObject.model}
+    x-model.number={data.unitObject.model}
     min={data.unitObject.min ?? "1"}
     step={data.unitObject.step ?? "1"}
     required={data.unitObject.required || undefined}
@@ -48,7 +48,7 @@ const dropdownDisabled = data.dropdownOptions.disabled;
     <button
       type="button"
       x-ref="trigger"
-      class="flex h-full w-full translate-x-[-1px] items-center justify-between gap-2 rounded-r-app border border-slate-700 bg-slate-900 px-3 py-2 text-left text-slate-100 disabled:cursor-not-allowed disabled:opacity-50"
+      class="flex h-full w-full -translate-x-px items-center justify-between gap-2 rounded-r-app border border-slate-700 bg-slate-900 px-3 py-2 text-left text-slate-100 disabled:cursor-not-allowed disabled:opacity-50"
       @click="if (!$el.disabled) open = !open"
       {...(dropdownDisabled ? { ":disabled": dropdownDisabled } : {})}
     >
