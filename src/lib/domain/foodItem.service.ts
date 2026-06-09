@@ -4,19 +4,25 @@ import type {
   FoodItemValidationResult,
   ReferenceUnit,
   ValidationErrorRecord,
-} from "@lib/domain/types";
+} from "@lib/domain/index";
 
+/** Reference units */
 const REFERENCE_UNITS = ["g", "ml"] as const;
+
+/** Optional macro fields */
 const OPTIONAL_MACRO_FIELDS = ["fibres", "fats", "carbs"] as const;
 
+/** Normalizes an item name */
 export function normalizeItemName(name: string | undefined): string {
   return name?.trim() ?? "";
 }
 
+/** Gets the name key */
 export function getNameKey(name: string | undefined): string {
   return normalizeItemName(name).toLowerCase();
 }
 
+/** Gets the next item id */
 export function getNextItemId(items: FoodItem[]): number {
   let maxId = 0;
 
@@ -29,6 +35,7 @@ export function getNextItemId(items: FoodItem[]): number {
   return maxId + 1;
 }
 
+/** Checks if a name is duplicate */
 export function isDuplicateName(
   items: FoodItem[],
   name: string | undefined,
@@ -46,14 +53,17 @@ export function isDuplicateName(
   );
 }
 
+/** Checks if a number is non-negative */
 function isNonNegativeNumber(value: number): boolean {
   return typeof value === "number" && Number.isFinite(value) && value >= 0;
 }
 
+/** Checks if a reference unit is valid */
 function isReferenceUnit(value: ReferenceUnit): boolean {
   return REFERENCE_UNITS.includes(value);
 }
 
+/** Validates a food item */
 export function validateFoodItem(
   input: FoodItemInput,
   context: { items: FoodItem[]; excludeId: number | null },
@@ -123,6 +133,7 @@ export function validateFoodItem(
   } as FoodItemValidationResult;
 }
 
+/** Validates a new food item */
 export function validateNewFoodItem(
   input: FoodItemInput,
   items: FoodItem[],
@@ -142,6 +153,7 @@ export function validateNewFoodItem(
   } as FoodItemValidationResult;
 }
 
+/** Validates a food item update */
 export function validateFoodItemUpdate(
   input: FoodItemInput,
   items: FoodItem[],

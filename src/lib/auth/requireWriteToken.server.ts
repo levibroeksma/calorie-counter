@@ -1,5 +1,5 @@
 import { ActionError } from "astro:actions";
-import { isWriteTokenValid } from "@lib/auth/password.server.js";
+import { isWriteTokenValid } from "@lib/auth/password.server";
 
 /** Input field name mutating actions expect on the client. */
 export const WRITE_TOKEN_INPUT_KEY = "writeToken" as const;

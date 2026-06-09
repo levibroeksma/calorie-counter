@@ -1,6 +1,7 @@
-import type { ModalFormData, ModalStore } from "@lib/domain/types.js";
 import type Alpine from "alpinejs";
+import type { ModalFormData, ModalStore } from "@lib/stores/types/modal";
 
+/** Creates a modal store */
 export default function modalStore(effect: typeof Alpine.effect): ModalStore {
   return {
     isOpen: false,
@@ -9,6 +10,7 @@ export default function modalStore(effect: typeof Alpine.effect): ModalStore {
     form: null,
     _pendingReset: false,
 
+    /** Opens the modal */
     open(
       activeForm: string,
       options: { title?: string; form?: ModalFormData } = {},
@@ -20,11 +22,13 @@ export default function modalStore(effect: typeof Alpine.effect): ModalStore {
       this.isOpen = true;
     },
 
+    /** Closes the modal */
     close(): void {
       this.isOpen = false;
       this._pendingReset = true;
     },
 
+    /** Resets the modal */
     reset(): void {
       this.activeForm = null;
       this.title = "";
@@ -32,10 +36,12 @@ export default function modalStore(effect: typeof Alpine.effect): ModalStore {
       this._pendingReset = false;
     },
 
+    /** Sets the form */
     setForm(patch: Partial<ModalFormData>): void {
       this.form = { ...(this.form ?? {}), ...patch } as ModalFormData;
     },
 
+    /** Initializes the modal store */
     init(): void {
       effect(() => {
         if (!this.isOpen && this._pendingReset) {

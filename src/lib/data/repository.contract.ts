@@ -1,4 +1,4 @@
-import type { DataRepository } from "@lib/domain/types";
+import type { DataRepository } from "@lib/data/index";
 
 /** List of method names that must be implemented by a DataRepository. */
 export const REPOSITORY_METHOD_NAMES = [

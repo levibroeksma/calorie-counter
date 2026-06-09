@@ -1,9 +1,11 @@
 import type {
   Preferences,
   PreferencesValidationResult,
-  MacroTotals,
   ValidationErrorRecord,
-} from "@lib/domain/types.js";
+  MacroTotals,
+} from "@lib/domain/index";
+
+/** Target fields */
 export const TARGET_FIELDS = [
   "targetCalories",
   "targetProtein",
@@ -12,10 +14,12 @@ export const TARGET_FIELDS = [
   "targetCarbs",
 ] as const;
 
+/** Checks if a number is non-negative */
 function isNonNegativeNumber(value: unknown): value is number {
   return typeof value === "number" && Number.isFinite(value) && value >= 0;
 }
 
+/** Validates preferences */
 export function validatePreferences(
   input: unknown,
 ): PreferencesValidationResult {
@@ -54,6 +58,7 @@ export function validatePreferences(
   return { valid: true, preferences };
 }
 
+/** Converts preferences to macro targets */
 export function preferencesToMacroTargets(
   preferences: Preferences,
 ): MacroTotals {

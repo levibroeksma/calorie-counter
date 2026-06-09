@@ -1,20 +1,19 @@
 import type Alpine from "alpinejs";
-import nl from "@lib/copy/nl.js";
+
+import nl from "@lib/copy/nl";
+
 import {
   sumMacrosForDate,
   resolveDayEntries,
-} from "@lib/domain/consumption.service.js";
-import { buildMacroBarRows } from "@lib/domain/dailyMacroDisplay.service.js";
-import { roundForDisplay } from "@lib/domain/portion.service.js";
-import type {
-  FoodItem,
-  AppStore,
-  TodayLogRow,
-  MacroStat,
-  ResolvedConsumptionEntry,
-  ModalStore,
-} from "@lib/domain/types.js";
+} from "@lib/domain/consumption.service";
+import { buildMacroBarRows } from "@lib/domain/dailyMacroDisplay.service";
+import { roundForDisplay } from "@lib/domain/portion.service";
 
+import type { ResolvedConsumptionEntry, FoodItem } from "@lib/domain/index";
+import type { AppStore, ModalStore } from "@lib/stores/index";
+import type { TodayLogRow, MacroStat } from "@lib/pages/index";
+
+/** Today page data */
 interface TodayPageData {
   todayEntries: ResolvedConsumptionEntry[];
   todayLogRows: TodayLogRow[];
@@ -26,8 +25,10 @@ interface TodayPageData {
   openQuickAdd(): void;
 }
 
+/** Creates a today page component */
 export default function todayPage(): Alpine.AlpineComponent<TodayPageData> {
   return {
+    /** Gets the today entries */
     get todayEntries() {
       const appStore = this.$store.appStore as AppStore;
       return resolveDayEntries(
@@ -37,6 +38,7 @@ export default function todayPage(): Alpine.AlpineComponent<TodayPageData> {
       );
     },
 
+    /** Gets the today log rows */
     get todayLogRows(): TodayLogRow[] {
       return this.todayEntries.map((entry: ResolvedConsumptionEntry) => ({
         index: entry.index,
@@ -46,6 +48,7 @@ export default function todayPage(): Alpine.AlpineComponent<TodayPageData> {
       }));
     },
 
+    /** Gets the macro stats */
     get macroStats() {
       const appStore = this.$store.appStore as AppStore;
       const achieved = sumMacrosForDate(
@@ -61,11 +64,13 @@ export default function todayPage(): Alpine.AlpineComponent<TodayPageData> {
       }));
     },
 
+    /** Gets the combobox items */
     get comboboxItems() {
       const appStore = this.$store.appStore as AppStore;
       return appStore.getComboboxItems();
     },
 
+    /** Gets the portion preview text */
     get portionPreviewText() {
       const appStore = this.$store.appStore as AppStore;
       const preview = appStore.getPortionPreview();
@@ -82,6 +87,7 @@ export default function todayPage(): Alpine.AlpineComponent<TodayPageData> {
       return parts.join(" · ");
     },
 
+    /** Gets the can add consumption */
     get canAddConsumption() {
       const appStore = this.$store.appStore as AppStore;
       return (
@@ -92,6 +98,7 @@ export default function todayPage(): Alpine.AlpineComponent<TodayPageData> {
       );
     },
 
+    /** Opens the today log */
     openTodayLog() {
       const appStore = this.$store.appStore as AppStore;
       appStore.cancelRemoveConsumption();
@@ -101,6 +108,7 @@ export default function todayPage(): Alpine.AlpineComponent<TodayPageData> {
       });
     },
 
+    /** Opens the quick add */
     openQuickAdd() {
       const modalStore = this.$store.modalStore as ModalStore;
       modalStore.open("quickAdd", {

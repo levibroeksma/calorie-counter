@@ -1,39 +1,54 @@
 import { actions } from "astro:actions";
-import { getWriteToken } from "@lib/auth/session.client.js";
-import nl from "@lib/copy/nl.js";
-import { getTodayLocal } from "@lib/data/date.service.js";
+
+import nl from "@lib/copy/nl";
+
+import { getWriteToken } from "@lib/auth/session.client";
+import { getTodayLocal } from "@lib/data/date.service";
 import {
   filterItemsByQuery,
   sortItemsForCombobox,
-} from "@lib/domain/consumption.service.js";
+} from "@lib/domain/consumption.service";
 import {
   roundMacrosForDisplay,
   scaleMacros,
-} from "@lib/domain/portion.service.js";
-import { messageForActionError } from "@lib/stores/actionMessages.js";
+} from "@lib/domain/portion.service";
+
+import { messageForActionError } from "@lib/stores/actionMessages";
+import { isCatalogFormData } from "@lib/stores/modal.guards.js";
+
 import type {
   AppStore,
-  LoadDataPayload,
-  Macro,
   ActionInvokeResult,
   ToastPayload,
   ModalStore,
+} from "@lib/stores/index";
+
+import type {
+  Preferences,
+  UpdateItemFields,
   FoodItemInput,
+  Macro,
+} from "@lib/domain/index";
+
+import type {
   CreateItemPayload,
   UpdateItemPayload,
   EnsureTodayPayload,
   AddConsumptionPayload,
   RemoveConsumptionPayload,
-  UpdateItemFields,
   UpdatePreferencesPayload,
-  Preferences,
-} from "@lib/domain/types.js";
-import { isCatalogFormData } from "@lib/stores/modal.guards.js";
+  LoadDataPayload,
+} from "@actions/payloads";
+
 import { getEmptyPreferences } from "@lib/data/emptyRepositoryDefaults.js";
 
-const TOAST_VISIBLE_MS = 2000;
-const TOAST_OUT_MS = 200;
+/** Toast visible duration */
+const TOAST_VISIBLE_MS = 2000 as const;
 
+/** Toast out duration */
+const TOAST_OUT_MS = 200 as const;
+
+/** Creates an app store */
 export default function appStore(): AppStore {
   return {
     items: [],
@@ -56,9 +71,11 @@ export default function appStore(): AppStore {
       toastQueue: [],
     },
 
+    /** Modal store */
     _modalStore: null,
     _toastTimer: null,
 
+    /** Applies a payload */
     applyPayload(data: LoadDataPayload): void {
       if (!data) {
         return;
@@ -81,6 +98,7 @@ export default function appStore(): AppStore {
       }
     },
 
+    /** Hydrates the store */
     hydrate(initial: LoadDataPayload): void {
       if (this.hydrated || !initial) {
         return;
@@ -90,6 +108,7 @@ export default function appStore(): AppStore {
       this.hydrated = true;
     },
 
+    /** Loads initial data */
     async loadInitialData(): Promise<void> {
       if (this.hydrated) {
         return;
@@ -108,6 +127,7 @@ export default function appStore(): AppStore {
       }
     },
 
+    /** Gets the selected item */
     getSelectedItem() {
       if (this.ui.comboboxSelectedId == null) {
         return null;
@@ -119,11 +139,13 @@ export default function appStore(): AppStore {
       );
     },
 
+    /** Gets the combobox items */
     getComboboxItems() {
       const sorted = sortItemsForCombobox(this.items, this.consumption);
       return filterItemsByQuery(sorted, this.ui.comboboxFilter);
     },
 
+    /** Gets the portion preview */
     getPortionPreview(): Macro | null {
       const item = this.getSelectedItem();
       const amount = this.ui.portionAmount;
@@ -142,6 +164,7 @@ export default function appStore(): AppStore {
       return roundMacrosForDisplay(scaled.macros);
     },
 
+    /** Shows a toast */
     showToast(message: string, type = "success"): void {
       const payload: ToastPayload = { message, type };
 
@@ -153,6 +176,7 @@ export default function appStore(): AppStore {
       this._displayToast(payload);
     },
 
+    /** Displays a toast */
     _displayToast(payload: ToastPayload): void {
       this.ui.toast = { ...payload, phase: "in" };
 
@@ -179,10 +203,12 @@ export default function appStore(): AppStore {
       }, TOAST_VISIBLE_MS);
     },
 
+    /** Shows an action error */
     showActionError(error: unknown): void {
       this.showToast(messageForActionError(error), "error");
     },
 
+    /** Requires a write token */
     _requireWriteToken(): string | null {
       const token = getWriteToken();
 
@@ -194,6 +220,7 @@ export default function appStore(): AppStore {
       return token;
     },
 
+    /** Runs a write action */
     async _runWriteAction<T>(
       invoke: () => Promise<ActionInvokeResult<T>>,
     ): Promise<T | null> {
@@ -222,25 +249,30 @@ export default function appStore(): AppStore {
       }
     },
 
+    /** Opens the combobox */
     openCombobox(): void {
       this.ui.comboboxOpen = true;
     },
 
+    /** Closes the combobox */
     closeCombobox(): void {
       this.ui.comboboxOpen = false;
     },
 
+    /** Resets the combobox */
     resetCombobox(): void {
       this.ui.comboboxOpen = false;
       this.ui.comboboxFilter = "";
       this.ui.comboboxSelectedId = null;
     },
 
+    /** Resets the portion */
     resetPortion(): void {
       this.ui.portionAmount = null;
       this.ui.portionUnit = "g";
     },
 
+    /** Selects a combobox item */
     selectComboboxItem(itemId: number): void {
       this.ui.comboboxSelectedId = itemId;
       const item = this.items.find((candidate) => candidate.id === itemId);
@@ -253,15 +285,18 @@ export default function appStore(): AppStore {
       this.ui.portionUnit = item.referenceUnit;
     },
 
+    /** Resets the add flow */
     resetAddFlow(): void {
       this.resetCombobox();
       this.resetPortion();
     },
 
+    /** Attaches a modal store */
     attachModalStore(modalStore: ModalStore): void {
       this._modalStore = modalStore;
     },
 
+    /** Submits a catalog add */
     async submitCatalogAdd(): Promise<CreateItemPayload | null> {
       const form = this._modalStore?.form;
 
@@ -286,6 +321,7 @@ export default function appStore(): AppStore {
       return data;
     },
 
+    /** Submits a catalog edit */
     async submitCatalogEdit(): Promise<UpdateItemPayload | null> {
       const form = this._modalStore?.form;
 
@@ -308,6 +344,7 @@ export default function appStore(): AppStore {
       return data;
     },
 
+    /** Submits a quick add */
     async submitQuickAdd(): Promise<CreateItemPayload | null> {
       const form = this._modalStore?.form;
 
@@ -340,6 +377,7 @@ export default function appStore(): AppStore {
       return data;
     },
 
+    /** Loads data */
     async loadData(): Promise<LoadDataPayload | null> {
       const { data, error } = await actions.loadData();
 
@@ -355,6 +393,7 @@ export default function appStore(): AppStore {
       return data ?? null;
     },
 
+    /** Ensures today */
     async ensureToday(): Promise<EnsureTodayPayload | null> {
       const writeToken = this._requireWriteToken();
 
@@ -378,6 +417,7 @@ export default function appStore(): AppStore {
       });
     },
 
+    /** Adds a consumption entry */
     async addConsumptionEntry(): Promise<AddConsumptionPayload | null> {
       const item = this.getSelectedItem();
       const amount = this.ui.portionAmount;
@@ -415,14 +455,17 @@ export default function appStore(): AppStore {
       return data as AddConsumptionPayload;
     },
 
+    /** Asks to remove a consumption entry */
     askRemoveConsumption(index: number): void {
       this.ui.confirmRemoveIndex = index;
     },
 
+    /** Cancels the remove consumption entry */
     cancelRemoveConsumption(): void {
       this.ui.confirmRemoveIndex = null;
     },
 
+    /** Confirms the remove consumption entry */
     async confirmRemoveConsumption(): Promise<void | null> {
       const index = this.ui.confirmRemoveIndex;
 
@@ -434,6 +477,7 @@ export default function appStore(): AppStore {
       this.ui.confirmRemoveIndex = null;
     },
 
+    /** Removes a consumption entry at a given index */
     async removeConsumptionAt(
       index: number,
     ): Promise<RemoveConsumptionPayload | null> {
@@ -456,6 +500,7 @@ export default function appStore(): AppStore {
       return data as RemoveConsumptionPayload;
     },
 
+    /** Creates an item */
     async createItem(fields, options = {}) {
       const writeToken = this._requireWriteToken();
 
@@ -492,6 +537,7 @@ export default function appStore(): AppStore {
       return data as CreateItemPayload;
     },
 
+    /** Updates an item */
     async updateItem(
       fields: UpdateItemFields,
     ): Promise<UpdateItemPayload | null> {
@@ -517,6 +563,7 @@ export default function appStore(): AppStore {
       return data as UpdateItemPayload;
     },
 
+    /** Updates preferences */
     async updatePreferences(
       targets: Preferences,
     ): Promise<UpdatePreferencesPayload | null> {

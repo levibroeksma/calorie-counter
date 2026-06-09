@@ -1,5 +1,6 @@
 import { defineAction, ActionError } from "astro:actions";
 import { z } from "astro/zod";
+
 import { isAppPasswordValid, WRITE_TOKEN } from "@lib/auth/password.server.js";
 
 export const login = defineAction({

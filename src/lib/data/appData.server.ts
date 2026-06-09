@@ -1,11 +1,11 @@
-import { getTodayLocal } from "@lib/data/date.service.js";
-import { getRepository } from "@lib/data/getRepository.js";
-import { findConsumptionDay } from "@lib/domain/consumption.service.js";
-import type {
-  ConsumptionDay,
-  LoadDataPayload,
-  LocalDate,
-} from "@lib/domain/types.js";
+import { getTodayLocal } from "@lib/data/date.service";
+import { getRepository } from "@lib/data/getRepository";
+
+import { findConsumptionDay } from "@lib/domain/consumption.service";
+
+import type { ConsumptionDay } from "@lib/domain/index";
+import type { LocalDate } from "@lib/domain/types/index";
+import type { LoadDataPayload } from "@actions/payloads";
 
 export async function loadAppData(): Promise<LoadDataPayload> {
   const repo = getRepository();

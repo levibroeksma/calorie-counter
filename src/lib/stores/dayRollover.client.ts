@@ -1,13 +1,17 @@
-import { isLoggedIn } from "@lib/auth/session.client.js";
-import { hasLocalDateChanged } from "@lib/data/date.service.js";
-import type { AppStore } from "@lib/domain/types.js";
+import { isLoggedIn } from "@lib/auth/session.client";
+import { hasLocalDateChanged } from "@lib/data/date.service";
 
+import type { AppStore } from "@lib/stores/index";
+
+/** Rollover check interval */
 const ROLLOVER_CHECK_MS = 60_000;
 
-export function startDayRolloverWatch(appStore: AppStore) {
+/** Starts the day rollover watch */
+export function startDayRolloverWatch(appStore: AppStore): void {
   let inFlight: boolean = false;
 
-  async function onDateMaybeChanged() {
+  /** Checks if the date has changed */
+  async function onDateMaybeChanged(): Promise<void> {
     if (inFlight || !isLoggedIn()) {
       return;
     }

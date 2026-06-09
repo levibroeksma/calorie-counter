@@ -1,14 +1,15 @@
 import type Alpine from "alpinejs";
 
-import nl, { LOCALE } from "@lib/copy/nl.js";
-import { roundForDisplay } from "@lib/domain/portion.service.js";
-import type {
-  FoodItem,
-  AppStore,
-  ModalStore,
-  UpdateItemPayload,
-} from "@lib/domain/types.js";
+import nl, { LOCALE } from "@lib/copy/nl";
 
+import { roundForDisplay } from "@lib/domain/portion.service";
+
+import type { FoodItem } from "@lib/domain/index";
+import type { AppStore } from "@lib/stores/index";
+import type { UpdateItemPayload } from "@actions/payloads";
+import type { ModalStore } from "@lib/stores/types/modal";
+
+/** Catalog page data */
 interface CatalogPageData {
   search: string;
   editConfirmPending: boolean;
@@ -22,11 +23,13 @@ interface CatalogPageData {
   confirmCatalogEditSave(): Promise<void>;
 }
 
+/** Creates a catalog page component */
 export default function catalogPage(): Alpine.AlpineComponent<CatalogPageData> {
   return {
     search: "" as string,
     editConfirmPending: false as boolean,
 
+    /** Gets the filtered items */
     get filteredItems(): FoodItem[] {
       const items = (this.$store.appStore as AppStore).items;
       const query = this.search.trim().toLowerCase();
@@ -42,6 +45,7 @@ export default function catalogPage(): Alpine.AlpineComponent<CatalogPageData> {
         );
     },
 
+    /** Gets the catalog rows */
     get catalogRows() {
       return this.filteredItems.map((item) => {
         const kcal = roundForDisplay(item.macros?.calories ?? 0);
@@ -52,6 +56,7 @@ export default function catalogPage(): Alpine.AlpineComponent<CatalogPageData> {
       });
     },
 
+    /** Opens the add modal */
     openAdd(): void {
       const modalStore = this.$store.modalStore as ModalStore;
       this.editConfirmPending = false;
@@ -72,6 +77,7 @@ export default function catalogPage(): Alpine.AlpineComponent<CatalogPageData> {
       });
     },
 
+    /** Opens the edit modal by id */
     openEditById(id: number): void {
       const appStore = this.$store.appStore as AppStore;
       const item = appStore.items.find(
@@ -83,6 +89,7 @@ export default function catalogPage(): Alpine.AlpineComponent<CatalogPageData> {
       }
     },
 
+    /** Opens the edit modal by item */
     openEdit(item: FoodItem): void {
       const modalStore = this.$store.modalStore as ModalStore;
       this.editConfirmPending = false;
@@ -98,14 +105,17 @@ export default function catalogPage(): Alpine.AlpineComponent<CatalogPageData> {
       });
     },
 
+    /** Requests the catalog edit save */
     requestCatalogEditSave(): void {
       this.editConfirmPending = true;
     },
 
+    /** Cancels the catalog edit confirm */
     cancelCatalogEditConfirm(): void {
       this.editConfirmPending = false;
     },
 
+    /** Confirms the catalog edit save */
     async confirmCatalogEditSave(): Promise<void> {
       const appStore = this.$store.appStore as AppStore;
       const data = (await appStore.submitCatalogEdit()) as UpdateItemPayload;

@@ -1,8 +1,9 @@
 import { ActionError } from "astro:actions";
+
 import type {
-  PortionValidationResult,
   ValidationErrorRecord,
-} from "@lib/domain/types.js";
+  PortionValidationResult,
+} from "@lib/domain/types/index";
 
 export { loadAppData, ensureTodayInMemory } from "@lib/data/appData.server.js";
 

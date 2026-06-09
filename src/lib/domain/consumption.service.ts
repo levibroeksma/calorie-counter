@@ -1,15 +1,16 @@
 import {
   MACRO_FIELDS,
   scaleConsumptionEntry,
-} from "@lib/domain/portion.service.js";
+} from "@lib/domain/portion.service";
 import type {
   ConsumptionDay,
+  ConsumptionEntry,
   FoodItem,
   LocalDate,
   MacroTotals,
-  ConsumptionEntry,
-} from "@lib/domain/types";
+} from "@lib/domain/index";
 
+/** Returns an empty macro totals object */
 function emptyTotals(): MacroTotals {
   return {
     calories: 0,
@@ -20,7 +21,7 @@ function emptyTotals(): MacroTotals {
   };
 }
 
-/** Add the values of the source totals to the target totals. */
+/** Adds the values of the source totals to the target totals */
 function addTotals(target: MacroTotals, source: MacroTotals) {
   for (const field of MACRO_FIELDS) {
     target[field as keyof MacroTotals] +=
@@ -28,6 +29,7 @@ function addTotals(target: MacroTotals, source: MacroTotals) {
   }
 }
 
+/** Builds a map of items by their id */
 export function buildItemsById(items: FoodItem[]) {
   const map = new Map<number, FoodItem>();
 
@@ -40,6 +42,7 @@ export function buildItemsById(items: FoodItem[]) {
   return map;
 }
 
+/** Finds a consumption day by date */
 export function findConsumptionDay(
   consumption: ConsumptionDay[],
   date: LocalDate,
@@ -51,6 +54,7 @@ export function findConsumptionDay(
   return consumption.find((day) => day?.date === date);
 }
 
+/** Gets the consumed items for a date */
 export function getConsumedForDate(
   consumption: ConsumptionDay[],
   date: LocalDate,
@@ -58,6 +62,7 @@ export function getConsumedForDate(
   return findConsumptionDay(consumption, date)?.consumed ?? [];
 }
 
+/** Gets the most recently used item ids */
 export function getMostRecentlyUsedItemIds(consumption: ConsumptionDay[]) {
   if (!Array.isArray(consumption)) {
     return [];
@@ -88,6 +93,7 @@ export function getMostRecentlyUsedItemIds(consumption: ConsumptionDay[]) {
   return order;
 }
 
+/** Sorts items for a combobox */
 export function sortItemsForCombobox(
   items: FoodItem[],
   consumption: ConsumptionDay[],
@@ -118,6 +124,7 @@ export function sortItemsForCombobox(
   return [...mruItems, ...remaining];
 }
 
+/** Filters items by a query */
 export function filterItemsByQuery(
   items: FoodItem[],
   query: string,
@@ -131,6 +138,7 @@ export function filterItemsByQuery(
   return items.filter((item) => item.name.toLowerCase().includes(normalized));
 }
 
+/** Resolves a consumption entry */
 export function resolveConsumptionEntry(
   itemsById: Map<number, FoodItem>,
   entry: ConsumptionEntry,
@@ -176,6 +184,7 @@ export function resolveConsumptionEntry(
   };
 }
 
+/** Resolves the entries for a day */
 export function resolveDayEntries(
   items: FoodItem[],
   consumption: ConsumptionDay[],
@@ -189,6 +198,7 @@ export function resolveDayEntries(
   );
 }
 
+/** Sums the macros for a date, returning a MacroTotals object */
 export function sumMacrosForDate(
   items: FoodItem[],
   consumption: ConsumptionDay[],

@@ -1,4 +1,4 @@
-import type { MacroKeys } from "@lib/domain/types";
+import type { MacroKeys } from "@lib/domain/types/macro";
 /** Dutch (nl-NL) UI copy — single source for all user-visible strings. */
 
 /** The locale of the UI copy. */

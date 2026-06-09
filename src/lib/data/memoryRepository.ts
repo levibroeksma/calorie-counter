@@ -1,18 +1,16 @@
-import { shouldUseSeedData } from "@config/environments.js";
-import { assertDataRepository } from "@lib/data/repository.contract.js";
+import { shouldUseSeedData } from "@config/environments";
+import { assertDataRepository } from "@lib/data/repository.contract";
+
 import {
   getEmptyConsumption,
   getEmptyItems,
   getEmptyPreferences,
-} from "@lib/data/emptyRepositoryDefaults.js";
-import { loadSeedData } from "@lib/data/seedLoader.js";
-import type {
-  Cloneable,
-  ConsumptionDay,
-  DataRepository,
-  FoodItem,
-  Preferences,
-} from "@lib/domain/types.js";
+} from "@lib/data/emptyRepositoryDefaults";
+
+import { loadSeedData } from "@lib/data/seedLoader";
+
+import type { FoodItem, Preferences, ConsumptionDay } from "@lib/domain/index";
+import type { DataRepository, Cloneable } from "@lib/data/index";
 
 function clone<T extends Cloneable>(value: T): T {
   return structuredClone(value);
@@ -20,11 +18,8 @@ function clone<T extends Cloneable>(value: T): T {
 
 export function createMemoryRepository(): DataRepository {
   let items: FoodItem[] | null = null;
-
   let consumption: ConsumptionDay[] | null = null;
-
   let preferences: Preferences | null = null;
-
   let seeding: Promise<void> | null = null;
 
   async function hydrateMissingFromSeed() {

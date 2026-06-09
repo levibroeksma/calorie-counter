@@ -1,4 +1,4 @@
-import type { Persistence, EnvironmentConfig } from "@lib/domain/types";
+import type { EnvironmentConfig, Persistence } from "@lib/config/index";
 
 /** Persistence backends used by repositories for automated development and production seperation. */
 export const PERSISTENCE = {

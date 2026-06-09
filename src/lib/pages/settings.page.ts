@@ -1,12 +1,16 @@
-import type { AppStore, Preferences } from "@lib/domain/types.js";
 import type Alpine from "alpinejs";
+import type { AppStore } from "@lib/stores/index";
+import type { Preferences } from "@lib/domain/index";
 
+/** Settings page data */
 interface SettingsPageData {
   form: Preferences;
   init(): void;
   syncFormFromStore(): void;
   save(): Promise<void>;
 }
+
+/** Creates a settings page component */
 export default function settingsPage(): Alpine.AlpineComponent<SettingsPageData> {
   return {
     form: {
@@ -17,6 +21,7 @@ export default function settingsPage(): Alpine.AlpineComponent<SettingsPageData>
       targetCarbs: 0,
     } as Preferences,
 
+    /** Initializes the settings page */
     init() {
       this.syncFormFromStore();
 
@@ -27,11 +32,13 @@ export default function settingsPage(): Alpine.AlpineComponent<SettingsPageData>
       });
     },
 
+    /** Syncs the form from the store */
     syncFormFromStore(): void {
       const { preferences } = this.$store.appStore as AppStore;
       this.form = { ...preferences };
     },
 
+    /** Saves the form */
     async save(): Promise<void> {
       const appStore = this.$store.appStore as AppStore;
       const saved = await appStore.updatePreferences(this.form);

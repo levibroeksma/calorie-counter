@@ -1,11 +1,10 @@
-import { getEnvironmentConfig, PERSISTENCE } from "@config/environments.js";
-import { createBlobRepository } from "@lib/data/blobRepository.js";
-import { memoryRepository } from "@lib/data/memoryRepository.js";
-import type {
-  BlobStoreLike,
-  DataRepository,
-  Persistence,
-} from "@lib/domain/types.js";
+import { getEnvironmentConfig, PERSISTENCE } from "@config/environments";
+
+import { createBlobRepository } from "@lib/data/blobRepository";
+import { memoryRepository } from "@lib/data/memoryRepository";
+
+import type { Persistence } from "@lib/config/index";
+import type { BlobStoreLike, DataRepository } from "@lib/data/index";
 
 let repositoryInstance: DataRepository | null = null;
 
