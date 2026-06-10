@@ -3,6 +3,8 @@ import { z } from "astro/zod";
 
 import { isAppPasswordValid, WRITE_TOKEN } from "@lib/auth/password.server";
 
+import type { LoginPayload } from "@actions/payloads";
+
 export const login = defineAction({
   input: z.object({
     password: z.string(),
@@ -18,6 +20,6 @@ export const login = defineAction({
     return {
       success: true,
       writeToken: WRITE_TOKEN,
-    };
+    } as LoginPayload;
   },
 });

@@ -51,3 +51,9 @@ export type UpdateItemPayload = {
 export type UpdatePreferencesPayload = {
   preferences: Preferences;
 };
+
+/** Login payload */
+export type LoginPayload = {
+  success: boolean;
+  writeToken: string;
+};
