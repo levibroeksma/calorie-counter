@@ -5,16 +5,17 @@ import type {
   ReferenceUnit,
   Macro,
   ScaleMacrosResult,
+  MacroKeys,
 } from "@lib/domain/index";
 
 /** Macro fields */
-export const MACRO_FIELDS = [
+export const MACRO_FIELDS: readonly MacroKeys[] = [
   "calories",
   "protein",
   "fibres",
   "fats",
   "carbs",
-] as const;
+];
 
 /** Rounds a value for display */
 export function roundForDisplay(value: number): number {
@@ -41,14 +42,14 @@ export function roundMacrosForDisplay(macros: Macro): Macro {
   return rounded;
 }
 
-/** Validates a portion */
+/** Validates a portion returns a validation result */
 export function validatePortion(
   item: FoodItem,
   amount: number,
   unit: ReferenceUnit,
 ): PortionValidationResult {
   if (!item) {
-    return { valid: false, reason: "missing_item" };
+    return { valid: false, errors: { item: "missing" } };
   }
 
   const referenceAmount: number = item.referenceAmount;
@@ -58,22 +59,34 @@ export function validatePortion(
     !Number.isFinite(referenceAmount) ||
     referenceAmount <= 0
   ) {
-    return { valid: false, reason: "invalid_reference_amount" };
+    return {
+      valid: false,
+      errors: { referenceAmount: "invalid" },
+    } satisfies PortionValidationResult;
   }
 
   if (amount == null || !Number.isFinite(amount) || amount <= 0) {
-    return { valid: false, reason: "invalid_amount" };
+    return {
+      valid: false,
+      errors: { amount: "invalid" },
+    } satisfies PortionValidationResult;
   }
 
   if (!unit || !item.referenceUnit) {
-    return { valid: false, reason: "missing_unit" };
+    return {
+      valid: false,
+      errors: { unit: "missing" },
+    } satisfies PortionValidationResult;
   }
 
   if (unit !== item.referenceUnit) {
-    return { valid: false, reason: "unit_mismatch" };
+    return {
+      valid: false,
+      errors: { unit: "mismatch" },
+    } satisfies PortionValidationResult;
   }
 
-  return { valid: true, scale: amount / referenceAmount };
+  return { valid: true, value: { scale: amount / referenceAmount } };
 }
 
 /** Gets the scale for a portion */
@@ -83,7 +96,7 @@ export function getScale(
   unit: ReferenceUnit,
 ): number | null {
   const validation = validatePortion(item, amount, unit);
-  return validation.valid ? validation.scale : null;
+  return validation.valid ? validation.value.scale : null;
 }
 
 /** Scales a macro value */
@@ -97,23 +110,33 @@ export function scaleMacros(
   amount: number,
   unit: ReferenceUnit,
 ): ScaleMacrosResult {
-  const validation = validatePortion(item, amount, unit);
+  const validation: PortionValidationResult = validatePortion(
+    item,
+    amount,
+    unit,
+  );
 
   if (!validation.valid) {
-    return { valid: false, reason: validation.reason };
+    return {
+      valid: false,
+      errors: validation.errors,
+    } satisfies ScaleMacrosResult;
   }
 
   const source: Macro = item.macros ?? {};
 
   const macros: Macro = {
-    calories: scaleMacroValue(source.calories, validation.scale),
-    protein: scaleMacroValue(source.protein, validation.scale),
-    fibres: scaleMacroValue(source.fibres, validation.scale),
-    fats: scaleMacroValue(source.fats, validation.scale),
-    carbs: scaleMacroValue(source.carbs, validation.scale),
+    calories: scaleMacroValue(source.calories, validation.value.scale),
+    protein: scaleMacroValue(source.protein, validation.value.scale),
+    fibres: scaleMacroValue(source.fibres, validation.value.scale),
+    fats: scaleMacroValue(source.fats, validation.value.scale),
+    carbs: scaleMacroValue(source.carbs, validation.value.scale),
   };
 
-  return { valid: true, scale: validation.scale, macros: macros };
+  return {
+    valid: true,
+    value: { scale: validation.value.scale, macros: macros },
+  } satisfies ScaleMacrosResult;
 }
 
 /** Scales a consumption entry */

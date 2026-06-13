@@ -20,6 +20,6 @@ export const login = defineAction({
     return {
       success: true,
       writeToken: WRITE_TOKEN,
-    } as LoginPayload;
+    } satisfies LoginPayload;
   },
 });

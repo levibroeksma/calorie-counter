@@ -20,9 +20,26 @@ export interface DataRepository {
   setPreferences(preferences: Preferences): Promise<void>;
 }
 
+export type BlobConsistencyMode = "eventual" | "strong";
+
+export type BlobGetOptions = {
+  type: "json";
+  consistency?: BlobConsistencyMode;
+};
+
+export type BlobSetOptions = {
+  onlyIfNew?: boolean;
+  onlyIfMatch?: string;
+  consistency?: BlobConsistencyMode;
+};
+
 export type BlobStoreLike = {
-  get(key: string, options: { type: "json" }): Promise<unknown>;
-  setJSON(key: string, data: unknown): Promise<BlobWriteResult>;
+  get(key: string, options: BlobGetOptions): Promise<unknown>;
+  setJSON(
+    key: string,
+    data: unknown,
+    options?: BlobSetOptions,
+  ): Promise<BlobWriteResult>;
 };
 
 export type BlobWriteResult = { modified: boolean; etag?: string };

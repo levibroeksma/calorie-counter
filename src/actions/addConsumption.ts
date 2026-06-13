@@ -70,6 +70,6 @@ export const addConsumption = defineAction({
       today: ensured.today,
       consumption: ensured.consumption,
       entry,
-    } as AddConsumptionPayload;
+    } satisfies AddConsumptionPayload;
   },
 });

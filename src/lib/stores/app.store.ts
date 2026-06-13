@@ -161,7 +161,7 @@ export default function appStore(): AppStore {
         return null;
       }
 
-      return roundMacrosForDisplay(scaled.macros);
+      return roundMacrosForDisplay(scaled.value.macros);
     },
 
     /** Shows a toast */

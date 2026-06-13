@@ -18,7 +18,9 @@ export const ensureToday = defineAction({
     requireWriteTokenFromInput(input);
 
     const repo = getRepository();
+
     let consumption = await repo.getConsumption();
+
     const {
       consumption: next,
       today,
@@ -36,6 +38,6 @@ export const ensureToday = defineAction({
       ...data,
       today,
       created,
-    } as EnsureTodayPayload;
+    } satisfies EnsureTodayPayload;
   },
 });

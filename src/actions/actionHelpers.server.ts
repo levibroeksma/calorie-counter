@@ -32,12 +32,12 @@ export function throwValidationErrors(errors: ValidationErrorRecord): never {
 /** Assert a valid portion. */
 export function assertValidPortion(
   result: PortionValidationResult,
-): asserts result is { valid: true; scale: number } {
+): asserts result is { valid: true; value: { scale: number } } {
   if (result.valid) {
     return;
   }
 
-  if (result.reason === "unit_mismatch") {
+  if (result.errors.unit === "mismatch") {
     throw new ActionError({
       code: "BAD_REQUEST",
       message: "unit_mismatch",

@@ -2,15 +2,16 @@ import type {
   FoodItem,
   FoodItemInput,
   FoodItemValidationResult,
+  MacroKeys,
   ReferenceUnit,
   ValidationErrorRecord,
 } from "@lib/domain/index";
 
 /** Reference units */
-const REFERENCE_UNITS = ["g", "ml"] as const;
+const REFERENCE_UNITS: readonly ReferenceUnit[] = ["g", "ml"];
 
 /** Optional macro fields */
-const OPTIONAL_MACRO_FIELDS = ["fibres", "fats", "carbs"] as const;
+const OPTIONAL_MACRO_FIELDS: readonly MacroKeys[] = ["fibres", "fats", "carbs"];
 
 /** Normalizes an item name */
 export function normalizeItemName(name: string | undefined): string {
@@ -110,7 +111,7 @@ export function validateFoodItem(
   }
 
   if (Object.keys(errors).length > 0) {
-    return { valid: false, errors } as FoodItemValidationResult;
+    return { valid: false, errors } satisfies FoodItemValidationResult;
   }
 
   const value = {
@@ -121,16 +122,16 @@ export function validateFoodItem(
     macros: {
       calories: macros.calories as number,
       protein: macros.protein as number,
-      ...(macros.fibres != null ? { fibres: macros.fibres as number } : {}),
-      ...(macros.fats != null ? { fats: macros.fats as number } : {}),
-      ...(macros.carbs != null ? { carbs: macros.carbs as number } : {}),
+      fibres: macros.fibres ?? 0,
+      fats: macros.fats ?? 0,
+      carbs: macros.carbs ?? 0,
     },
-  };
+  } satisfies FoodItem;
 
   return {
     valid: true,
-    item: value as FoodItem,
-  } as FoodItemValidationResult;
+    value: value satisfies FoodItem,
+  } satisfies FoodItemValidationResult;
 }
 
 /** Validates a new food item */
@@ -141,16 +142,16 @@ export function validateNewFoodItem(
   const result = validateFoodItem(input, { items, excludeId: null });
 
   if (!result.valid) {
-    return result as FoodItemValidationResult;
+    return result satisfies FoodItemValidationResult;
   }
 
   return {
     valid: true,
-    item: {
-      ...result.item,
+    value: {
+      ...result.value,
       id: getNextItemId(items),
-    } as FoodItem,
-  } as FoodItemValidationResult;
+    } satisfies FoodItem,
+  } satisfies FoodItemValidationResult;
 }
 
 /** Validates a food item update */
@@ -165,20 +166,20 @@ export function validateFoodItemUpdate(
     return {
       valid: false,
       errors: { id: "not_found" },
-    } as FoodItemValidationResult;
+    } satisfies FoodItemValidationResult;
   }
 
   const result = validateFoodItem(input, { items, excludeId: id });
 
   if (!result.valid) {
-    return result as FoodItemValidationResult;
+    return result satisfies FoodItemValidationResult;
   }
 
   return {
     valid: true,
-    item: {
-      ...result.item,
+    value: {
+      ...result.value,
       id,
-    } as FoodItem,
-  } as FoodItemValidationResult;
+    } satisfies FoodItem,
+  } satisfies FoodItemValidationResult;
 }

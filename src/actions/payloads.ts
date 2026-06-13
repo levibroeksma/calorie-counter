@@ -20,31 +20,29 @@ export type EnsureTodayPayload = LoadDataPayload & {
 };
 
 /** Add consumption payload */
-export type AddConsumptionPayload = {
-  today: LocalDate;
-  consumption: ConsumptionDay[];
-  entry: ConsumptionEntry;
-};
+export type AddConsumptionPayload = Pick<
+  LoadDataPayload,
+  "today" | "consumption"
+> & { entry: ConsumptionEntry };
 
 /** Remove consumption payload */
-export type RemoveConsumptionPayload = {
-  today: LocalDate;
-  consumption: ConsumptionDay[];
-  removedIndex: number;
-};
+export type RemoveConsumptionPayload = Pick<
+  LoadDataPayload,
+  "today" | "consumption"
+> & { removedIndex: number };
 
 /** Create item payload */
-export type CreateItemPayload = {
+export type CreateItemPayload = Pick<
+  LoadDataPayload,
+  "items" | "consumption"
+> & {
   item: FoodItem;
-  items: FoodItem[];
-  consumption: ConsumptionDay[];
   logged: boolean;
 };
 
 /** Update item payload */
-export type UpdateItemPayload = {
+export type UpdateItemPayload = Pick<LoadDataPayload, "items"> & {
   item: FoodItem;
-  items: FoodItem[];
 };
 
 /** Update preferences payload */

@@ -1,3 +1,5 @@
+import type { ValidationResult } from "./validation";
+
 /** Portion invalid reason */
 export type PortionInvalidReason =
   | "missing_item"
@@ -7,6 +9,4 @@ export type PortionInvalidReason =
   | "unit_mismatch";
 
 /** Portion validation result */
-export type PortionValidationResult =
-  | { valid: true; scale: number }
-  | { valid: false; reason: PortionInvalidReason };
+export type PortionValidationResult = ValidationResult<{ scale: number }>;

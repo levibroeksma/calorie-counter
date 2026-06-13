@@ -5,7 +5,7 @@ import type {
   referenceUnitSchema,
 } from "@actions/schemas";
 
-import type { ValidationErrorRecord } from "@lib/domain/index";
+import type { ValidationResult } from "@lib/domain/index";
 
 /** Food item fields */
 export type FoodItemFields = z.infer<typeof foodItemFieldsSchema>;
@@ -14,13 +14,12 @@ export type FoodItemFields = z.infer<typeof foodItemFieldsSchema>;
 export type FoodItem = FoodItemFields & {
   id: number;
 };
+
 /** Food item input */
-export type FoodItemInput = z.input<typeof foodItemFieldsSchema>;
+export type FoodItemInput = z.infer<typeof foodItemFieldsSchema>;
 
 /** Food item validation result */
-export type FoodItemValidationResult =
-  | { valid: false; errors: ValidationErrorRecord }
-  | { valid: true; item: FoodItem };
+export type FoodItemValidationResult = ValidationResult<FoodItem>;
 
 /** Reference unit */
 export type ReferenceUnit = z.infer<typeof referenceUnitSchema>;

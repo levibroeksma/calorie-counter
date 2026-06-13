@@ -20,6 +20,8 @@ import { BLOB_STORE_KEYS } from "@lib/data/index.js";
 import type { ConsumptionDay, FoodItem, Preferences } from "@lib/domain/index";
 
 import type {
+  BlobGetOptions,
+  BlobSetOptions,
   BlobStoreKey,
   BlobStoreLike,
   Cloneable,
@@ -30,6 +32,8 @@ import type {
 /** Site-wide Netlify Blobs store for persisted JSON blobs. */
 export const BLOB_SITE_STORE_NAME = "calory-tracker" as const;
 
+const BLOB_READ_OPTIONS = { type: "json", consistency: "strong" } as const satisfies BlobGetOptions;
+
 /** Clone a value of type `Cloneable`. */
 function clone<T extends Cloneable>(value: T): T {
   return structuredClone(value);
@@ -39,7 +43,7 @@ async function readJsonKey(
   store: BlobStoreLike,
   key: BlobStoreKey,
 ): Promise<Cloneable | null> {
-  const value = await store.get(key, { type: "json" });
+  const value = await store.get(key, BLOB_READ_OPTIONS);
 
   if (value === null || value === undefined) {
     return null;
@@ -48,6 +52,22 @@ async function readJsonKey(
   return value as Cloneable;
 }
 
+async function writeJsonKey(
+  store: BlobStoreLike,
+  key: BlobStoreKey,
+  value: Cloneable,
+  options?: BlobSetOptions,
+): Promise<BlobWriteResult> {
+  return store.setJSON(key, clone(value), {
+    consistency: "strong",
+    ...options,
+  });
+}
+
+/**
+ * Reads a blob key, seeding only in local dev when explicitly enabled.
+ * Production never overwrites missing keys with empty defaults on read.
+ */
 async function readOrInitialize<T extends Cloneable>(
   store: BlobStoreLike,
   key: BlobStoreKey,
@@ -59,14 +79,21 @@ async function readOrInitialize<T extends Cloneable>(
     return clone(existing as T) as T;
   }
 
-  const initial = shouldUseSeedData() ? await loadSeed() : loadEmpty();
-  await store.setJSON(key, initial);
+  if (shouldUseSeedData()) {
+    const initial = await loadSeed();
+    await writeJsonKey(store, key, initial, { onlyIfNew: true });
+    const seeded = await readJsonKey(store, key);
+    return seeded !== null ? (clone(seeded as T) as T) : clone(initial);
+  }
 
-  return clone(initial) as T;
+  return clone(loadEmpty()) as T;
 }
 
 function getDefaultBlobStore(): BlobStoreLike {
-  return getStore(BLOB_SITE_STORE_NAME);
+  return getStore({
+    name: BLOB_SITE_STORE_NAME,
+    consistency: "strong",
+  });
 }
 
 export function createBlobRepository(
@@ -83,7 +110,7 @@ export function createBlobRepository(
     },
 
     async setItems(items: FoodItem[]): Promise<void> {
-      await store.setJSON(BLOB_STORE_KEYS.ITEMS, clone(items));
+      await writeJsonKey(store as BlobStoreLike, BLOB_STORE_KEYS.ITEMS, items);
     },
 
     async getConsumption(): Promise<ConsumptionDay[]> {
@@ -98,7 +125,11 @@ export function createBlobRepository(
     },
 
     async setConsumption(consumption: ConsumptionDay[]): Promise<void> {
-      await store.setJSON(BLOB_STORE_KEYS.CONSUMPTION, clone(consumption));
+      await writeJsonKey(
+        store as BlobStoreLike,
+        BLOB_STORE_KEYS.CONSUMPTION,
+        consumption,
+      );
     },
 
     async getPreferences(): Promise<Preferences> {
@@ -113,7 +144,11 @@ export function createBlobRepository(
     },
 
     async setPreferences(preferences: Preferences): Promise<void> {
-      await store.setJSON(BLOB_STORE_KEYS.PREFERENCES, clone(preferences));
+      await writeJsonKey(
+        store as BlobStoreLike,
+        BLOB_STORE_KEYS.PREFERENCES,
+        preferences,
+      );
     },
   } as DataRepository;
 
