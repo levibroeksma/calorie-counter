@@ -30,6 +30,6 @@ export const updatePreferences = defineAction({
 
     return {
       preferences: validation.preferences,
-    } as UpdatePreferencesPayload;
+    } satisfies UpdatePreferencesPayload;
   },
 });

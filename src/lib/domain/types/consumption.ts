@@ -3,7 +3,7 @@ import type {
   LocalDate,
   Macro,
   ReferenceUnit,
-  PortionInvalidReason,
+  ValidationErrorRecord,
 } from "@lib/domain/index";
 
 /** Raw consumption entry */
@@ -20,7 +20,7 @@ export type ResolvedConsumptionEntry = ConsumptionEntry & {
   item: FoodItem | undefined;
   displayName: string | null;
   macros: Macro | null | undefined;
-  invalidReason?: PortionInvalidReason;
+  invalidReason?: ValidationErrorRecord;
 };
 
 /** Consumption day */

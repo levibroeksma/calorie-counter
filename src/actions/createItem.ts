@@ -17,7 +17,7 @@ import { createItemInputSchema } from "@actions/schemas";
 
 import type { CreateItemPayload } from "@actions/payloads";
 
-import type { ReferenceUnit } from "@lib/domain/index";
+import type { FoodItem, ReferenceUnit } from "@lib/domain/index";
 
 export const createItem = defineAction({
   input: createItemInputSchema,
@@ -40,7 +40,7 @@ export const createItem = defineAction({
       throwValidationErrors(validation.errors);
     }
 
-    const item = validation.item;
+    const item = validation.value satisfies FoodItem;
     const nextItems = [...items, item];
     await repo.setItems(nextItems);
 
@@ -78,6 +78,6 @@ export const createItem = defineAction({
       items: nextItems,
       consumption,
       logged,
-    } as CreateItemPayload;
+    } satisfies CreateItemPayload;
   },
 });

@@ -45,6 +45,6 @@ export const removeConsumption = defineAction({
       today,
       consumption,
       removedIndex: input.index,
-    } as RemoveConsumptionPayload;
+    } satisfies RemoveConsumptionPayload;
   },
 });

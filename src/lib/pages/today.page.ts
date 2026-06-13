@@ -9,7 +9,11 @@ import {
 import { buildMacroBarRows } from "@lib/domain/dailyMacroDisplay.service";
 import { roundForDisplay } from "@lib/domain/portion.service";
 
-import type { ResolvedConsumptionEntry, FoodItem } from "@lib/domain/index";
+import type {
+  ResolvedConsumptionEntry,
+  MacroTotals,
+  FoodItem,
+} from "@lib/domain/index";
 import type { AppStore, ModalStore } from "@lib/stores/index";
 import type { TodayLogRow, MacroStat } from "@lib/pages/index";
 
@@ -35,7 +39,7 @@ export default function todayPage(): Alpine.AlpineComponent<TodayPageData> {
         appStore.items,
         appStore.consumption,
         appStore.today,
-      );
+      ) satisfies ResolvedConsumptionEntry[];
     },
 
     /** Gets the today log rows */
@@ -45,7 +49,7 @@ export default function todayPage(): Alpine.AlpineComponent<TodayPageData> {
         rowName: entry.displayName ?? nl.errors.unknownItem,
         portionText: `${entry.amount} ${entry.unit}`,
         caloriesText: `${roundForDisplay(entry.macros?.calories ?? 0)} ${nl.units.kcal}`,
-      }));
+      })) satisfies TodayLogRow[];
     },
 
     /** Gets the macro stats */
@@ -55,7 +59,8 @@ export default function todayPage(): Alpine.AlpineComponent<TodayPageData> {
         appStore.items,
         appStore.consumption,
         appStore.today,
-      );
+      ) satisfies MacroTotals;
+
       const rows = buildMacroBarRows(achieved, appStore.preferences);
 
       return rows.map((row) => ({

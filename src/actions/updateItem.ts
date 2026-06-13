@@ -34,13 +34,13 @@ export const updateItem = defineAction({
     }
 
     const nextItems = items.map((item) =>
-      item.id === input.id ? validation.item : item,
+      item.id === input.id ? validation.value : item,
     );
     await repo.setItems(nextItems);
 
     return {
-      item: validation.item,
+      item: validation.value,
       items: nextItems,
-    } as UpdateItemPayload;
+    } satisfies UpdateItemPayload;
   },
 });

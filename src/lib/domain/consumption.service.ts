@@ -8,6 +8,7 @@ import type {
   FoodItem,
   LocalDate,
   MacroTotals,
+  ResolvedConsumptionEntry,
 } from "@lib/domain/index";
 
 /** Returns an empty macro totals object */
@@ -143,7 +144,7 @@ export function resolveConsumptionEntry(
   itemsById: Map<number, FoodItem>,
   entry: ConsumptionEntry,
   index: number,
-) {
+): ResolvedConsumptionEntry {
   const item: FoodItem | undefined = itemsById.get(entry.itemId);
 
   if (!item) {
@@ -169,7 +170,7 @@ export function resolveConsumptionEntry(
       item,
       displayName: item.name,
       macros: undefined,
-      invalidReason: scaled.reason,
+      invalidReason: scaled.errors,
     };
   }
 
@@ -180,7 +181,7 @@ export function resolveConsumptionEntry(
     isValid: true,
     item,
     displayName: item.name,
-    macros: scaled.macros ?? undefined,
+    macros: scaled.value.macros,
   };
 }
 
@@ -189,7 +190,7 @@ export function resolveDayEntries(
   items: FoodItem[],
   consumption: ConsumptionDay[],
   date: LocalDate,
-) {
+): ResolvedConsumptionEntry[] {
   const itemsById = buildItemsById(items);
   const consumed = getConsumedForDate(consumption, date);
 
@@ -221,8 +222,8 @@ export function sumMacrosForDate(
       continue;
     }
 
-    addTotals(totals, scaled.macros ?? emptyTotals());
+    addTotals(totals, scaled.value.macros ?? emptyTotals());
   }
 
-  return totals;
+  return totals satisfies MacroTotals;
 }
